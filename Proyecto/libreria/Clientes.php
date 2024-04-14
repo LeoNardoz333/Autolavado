@@ -1,7 +1,28 @@
 <?php
-    class Conexion
+    class Clientes
+    implements IClientes, ICrud
     {
-        function Insertar($maquina, $numSerie,$FechaCompra,$Costo,$tipo)
+        function turnoClientes()
+        {
+
+        }
+        function Insertar()
+        {
+
+        }
+        function Consultar()
+        {
+
+        }
+        function Modificar()
+        {
+
+        }
+        function Borrar()
+        {
+            
+        }
+        /*function Insertar($maquina, $numSerie,$FechaCompra,$Costo,$tipo)
         {
             $con = new mysqli(s,u,p,bd);
             $con->set_charset("utf8");
@@ -39,6 +60,6 @@
 
             $q->close();
             return $rs.'</tbody></table>';
-        }
+        }*/
     }
 ?>
