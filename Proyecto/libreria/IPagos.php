@@ -1,8 +1,7 @@
 <?php
-    interface IReportes
+    interface IPagos
     {
         function pagosDiarios();
         function empleadoDelDia();
-        function clientesTotales();
     }
 ?>
