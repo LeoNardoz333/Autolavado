@@ -1,6 +1,6 @@
 <?php
     class Administradores
-    implements ICrud, IReportes
+    implements ICrud, IPagos, IVentas
     {
         function Insertar()
         {
