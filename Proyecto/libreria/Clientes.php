@@ -6,19 +6,19 @@
         {
 
         }
-        function Insertar()
+        function Insertar($nombre, $tipoAuto, $turno)
+        {
+            $con = new mysqli(s, u, p, bd);
+        }
+        function Consultar($nombre)
         {
 
         }
-        function Consultar()
+        function Modificar($nombre, $tipoAuto, $turno)
         {
 
         }
-        function Modificar()
-        {
-
-        }
-        function Borrar()
+        function Borrar($id)
         {
             
         }
