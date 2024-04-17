@@ -2,19 +2,19 @@
     class Administradores
     implements ICrud, IPagos, IVentas
     {
-        function Insertar()
+        function Insertar(array $datos)
+        {
+            $con = new mysqli(s, u, p, bd);
+        }
+        function Consultar($nombre)
         {
 
         }
-        function Consultar()
+        function Modificar(array $datos)
         {
 
         }
-        function Modificar()
-        {
-
-        }
-        function Borrar()
+        function Borrar($id)
         {
             
         }

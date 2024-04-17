@@ -6,7 +6,7 @@
         {
 
         }
-        function Insertar($nombre, $tipoAuto, $turno)
+        function Insertar(array $datos)
         {
             $con = new mysqli(s, u, p, bd);
         }
@@ -14,7 +14,7 @@
         {
 
         }
-        function Modificar($nombre, $tipoAuto, $turno)
+        function Modificar(array $datos)
         {
 
         }
@@ -22,6 +22,7 @@
         {
             
         }
+    }
         /*function Insertar($maquina, $numSerie,$FechaCompra,$Costo,$tipo)
         {
             $con = new mysqli(s,u,p,bd);
@@ -61,5 +62,4 @@
             $q->close();
             return $rs.'</tbody></table>';
         }*/
-    }
 ?>
