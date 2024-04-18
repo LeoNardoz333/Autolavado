@@ -1,6 +1,6 @@
 <?php
     define('s','localhost');
-    define('u','root');
-    define('p','');
-    define('bd','probar');
+    define('u','userAutolavado');
+    define('p','chivas123');
+    define('bd','Autolavado');
 ?>
