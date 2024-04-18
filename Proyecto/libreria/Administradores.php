@@ -2,6 +2,9 @@
     class Administradores
     implements ICrud, IPagos, IVentas
     {
+        private $reporte = new GenerarPDF();
+        private $pagos = new Pagos();
+        private $ventas = new Ventas();
         function Insertar(array $datos)
         {
             $con = new mysqli(s, u, p, bd);
@@ -67,16 +70,24 @@
         }
         function pagosDiarios(array $datos)
         {
-            $pagos = new Pagos();
-            $pagos -> Insertar($datos);
+            //Se tienen que mandar en el array, el id del empleado, el nombre del empleado, la cantidad de pago y la fecha
+            //Filtrado por la fecha del día solicitado
+            $this ->pagos -> Insertar($datos);
+            $this->reporte->GenerarReporte($datos, 'Pagos a empleados '.$datos['fecha'], 'Pagos_'.$datos['fecha']);
         }
         function empleadoDelDia(array $datos)
         {
-
+            //Se tienen que mandar en el array, el id del empleado, el nombre del empleado, la cantidad de clientes y la fecha
+            //Filtrado por el empleado que tenga más clientes atendidos por fecha
+            $this->pagos -> Insertar($datos);
+            $this->reporte->GenerarReporte($datos, 'Historial de empleados del día', 'Empleados_del_dia');
         }
-        function clientesTotales()
+        function clientesTotales(array $datos)
         {
-            
+            //Se tienen que mandar en el array, el id del empleado, el nombre del empleado, la cantidad de clientes y la fecha
+            //Filtrado por la fecha del día solicitado
+            $this ->ventas -> Insertar($datos);
+            $this->reporte->GenerarReporte($datos, 'Clientes totales '.$datos['fecha'], 'Clientes_'.$datos['fecha']);
         }
     }
 ?>

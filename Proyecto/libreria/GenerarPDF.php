@@ -13,23 +13,15 @@
         {
             $this->pdf->SetTitle($titulo);
         }
-        function ReportePagos($empleado, $pago, $fecha)
+        function GenerarReporte(array $datos, $titulo, $nombrePDF)
         {
-            $this->titulo('Reporte de pagos diarios a empleados');
-            $this->pdf->Cell(0, 10, "El empleado $empleado ha recibido de paga la cantidad de $$pago en el día $fecha.", 0, 1);
-            $this->pdf->Output('Pago_'.$empleado.'_'.$fecha.'.pdf', 'D');
-        }
-        function ReporteClientes($empleado, $noClientes, $fecha)
-        {
-            $this->titulo('Reporte de clientes atendidos diarios');
-            $this->pdf->Cell(0, 10, "El empleado $empleado ha atendido la cantidad de $noClientes en el día $fecha.", 0, 1);
-            $this->pdf->Output('Clientes_'.$empleado.'_'.$fecha.'.pdf', 'D');
-        }
-        function ReporteEmpDia($empleado, $noClientes, $fecha)
-        {
-            $this->titulo('Reporte de clientes atendidos diarios');
-            $this->pdf->Cell(0, 10, "El empleado del día $fecha fue $empleado, quien ha atendido la cantidad de $noClientes.", 0, 1);
-            $this->pdf->Output('EmpDia_'.$empleado.'_'.$fecha.'.pdf', 'D');
+            $this->titulo($titulo);
+            $this->pdf->Cell(0, 10, $titulo, 0, 1);
+            foreach ($datos as $fila) {
+                $texto = implode(', ', $fila);
+                $this->pdf->Cell(0, 10, $texto, 0, 1);
+            }
+            $this->pdf->Output($nombrePDF . '.pdf', 'D');
         }
     }
 ?>

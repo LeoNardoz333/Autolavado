@@ -1,0 +1,58 @@
+Nuevas solicitudes para la base de datos
+#Crear las tablas:
+
+CREATE TABLE tipoAuto(
+idTipoAuto INT AUTO_INCREMENT PRIMARY KEY,
+auto varchar(50),
+clasificacion VARCHAR(50),
+unidad varchar(50),
+valor DOUBLE); #valor por unidad de medida 
+
+create table pagos(
+id int primary key auto_increment,
+fkidEmpleado int,
+cantidad double,
+fecha datetime,
+foreign key(fkidEmpleado) references empleados(idEmpleado));
+
+#Aquí ya se especificaría la cantidad, y ya con un trigger insertamos el valor en el pago dependiendo de la clasificación
+create table ventas(
+id int primary key auto_increment,
+fkidEmpleado int,
+fkidTipoAuto int,
+cantidad double, #cantidad de la unidad de medida
+fecha datetime,
+foreign key(fkidEmpleado) references empleados(idEmpleado),
+foreign key(fkidTipoAuto) references empleados(idTipoAuto));
+
+create table ventasTotales(
+id int primary key auto_increment,
+fkidEmpleado int,
+noClientes int,
+fecha datetime,
+foreign key(fkidEmpleado) references empleados(idEmpleado));
+
+#Cómo funcionarán los pagos
+/*
+* Los pagos se registrarán automáticamente, por lo que no hará falta crear una interfaz para capturar
+* se necesita poder ver la tabla de pagos, que mostrará como está en la base de datos
+* Se necesitan botones para imprimir reportes de pagos diarios y empleado del día
+* Las ventas tampoco necesitan una página de captura, ya que se registrarán al momento de capturar un cliente
+* se necesita poder ver la tabla de ventas y ventas totales, que mostrará como está en la base de datos
+* Se necesitan botones para imprimir reportes de clientes totales en ambas páginas (ventas y ventas totales)
+*/
+
+#Triggers
+/*Crear un trigger que cada que se inserte una venta, haga un update en pagos en el empleado que realizó la venta (si no existe un registro de venta de ese empleado que inserte uno nuevo), donde sume a la cantidad en la misma fecha, la cantidad respecto al tipo de vehículo que atendió, también que se realice una suma con un update (Si no existe que lo inserte) a la tabla de ventas totales donde le sume 1 al campo de noClientes*/
+
+/*Trigger que revierta las cantidades de los pagos y ventas totales en caso de que se elimine algo de las ventas*/
+
+#Crear las siguientes vistas:
+
+/*Seleccionar el id del empleado, el nombre del empleado, la cantidad de pago y la fecha, de las tablas de pagos y empleados donde la pagos.fkidEmpleado sea igual a empleados.idEmpleado*/
+
+/*Seleccionar el id del empleado, el nombre del empleado, la cantidad de clientes atendidos y la fecha de la tabla de ventasTotales y empleados donde las ids de los empleados coincidan*/
+
+/*Seleccionar  el id del empleado, el nombre del empleado, la clasificacion del auto, las unidades, la cantidad de unidades y la fecha, de las tablas de ventas y empleados donde las ids de los empleados coincidan*/
+
+#Crear un procedure donde se seleccione el empleado que tengan más noClientes de la tabla de ventas totales por una fecha especificada pasada como parámetro
