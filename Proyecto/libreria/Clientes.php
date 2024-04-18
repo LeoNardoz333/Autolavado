@@ -26,8 +26,8 @@
             $con->set_charset("utf8");
             $q = $con->stmt_init();
             $q->prepare("SELECT * FROM clientes WHERE nombre LIKE ?");
-            $nombret='%'.$nombret.'%';
-            $q->bind_param('s', $fill);
+            $nombre='%'.$nombre.'%';
+            $q->bind_param('s', $nombre);
             $q->execute();
             $q->bind_result($id, $nombret, $tipoAuto,$turno);
 
