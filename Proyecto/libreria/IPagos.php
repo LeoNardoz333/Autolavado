@@ -1,7 +1,7 @@
 <?php
     interface IPagos
     {
-        function pagosDiarios();
-        function empleadoDelDia();
+        function pagosDiarios(array $datos);
+        function empleadoDelDia(array $datos);
     }
 ?>

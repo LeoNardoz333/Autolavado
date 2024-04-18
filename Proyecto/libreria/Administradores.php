@@ -65,11 +65,11 @@
             $q->execute();
             $q->close();
         }
-        function pagosDiarios()
+        function pagosDiarios(array $datos)
         {
 
         }
-        function empleadoDelDia()
+        function empleadoDelDia(array $datos)
         {
 
         }

@@ -1,15 +1,7 @@
 <?php
     class Pagos
-    implements IPagos, ICrud
+    implements ICrud
     {
-        function pagosDiarios()
-        {
-
-        }
-        function empleadoDelDia()
-        {
-            
-        }
         function Insertar(array $datos)
         {
             $fecha = date('Y-m-d H:i:s', strtotime($datos['fecha']));
