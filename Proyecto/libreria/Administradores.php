@@ -67,7 +67,8 @@
         }
         function pagosDiarios(array $datos)
         {
-
+            $pagos = new Pagos();
+            $pagos -> Insertar($datos);
         }
         function empleadoDelDia(array $datos)
         {

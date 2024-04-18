@@ -12,6 +12,7 @@
     require 'libreria/Login.php';
     require 'libreria/Pagos.php';
     require 'libreria/Ventas.php';
+    require 'libreria/GenerarPDF.php';
 	require 'libreria/Factory.php';
 	$p = array();
 	View('home',$p);
