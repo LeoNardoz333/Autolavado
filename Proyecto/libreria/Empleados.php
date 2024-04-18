@@ -7,7 +7,7 @@
             $con = new mysqli(s, u, p, bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $q->prepare("INSERT INTO  VALUES (null, ?, ?, ?)");
+            $q->prepare("INSERT INTO clientes VALUES (null, ?, ?, ?)");
             $q->bind_param('sss', $datos['nombre'], $datos['tipoAuto'], $datos['turno']);
             $q->execute();
             $q->close();
