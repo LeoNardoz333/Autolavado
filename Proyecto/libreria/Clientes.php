@@ -73,7 +73,8 @@
             $con = new mysqli(s, u, p, bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $q->prepare("delete from clientes where id=$id");
+            $q->prepare("delete from clientes where id=?");
+            $q->bind_param('s', $id);
             $q->execute();
             $q->close();
         }

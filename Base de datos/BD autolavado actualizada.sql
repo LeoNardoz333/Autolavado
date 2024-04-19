@@ -81,10 +81,12 @@ BEGIN
         IF p_idEmpleado < 1 THEN
             INSERT INTO empleados VALUES (null, p_nombre, p_noAutos, p_noClientes, p_permisos); 
         ELSE
-            UPDATE empleados SET nombre = p_nombre, noAutos = p_noAutos, noClientes = p_noClientes, permisos = p_permisos WHERE idEmpleado = p_idEmpleado;
+            UPDATE empleados SET nombre = p_nombre, noAutos = p_noAutos, noClientes = p_noClientes,
+				 permisos = p_permisos WHERE idEmpleado = p_idEmpleado;
         END IF;
     ELSE
-        UPDATE empleados SET nombre = p_nombre, noAutos = p_noAutos, noClientes = p_noClientes, permisos = p_permisos WHERE idEmpleado = p_idEmpleado;
+        UPDATE empleados SET nombre = p_nombre, noAutos = p_noAutos, noClientes = p_noClientes, 
+		  permisos = p_permisos WHERE idEmpleado = p_idEmpleado;
     END IF;
 END;
 

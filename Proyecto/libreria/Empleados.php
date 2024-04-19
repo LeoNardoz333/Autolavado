@@ -1,13 +1,15 @@
 <?php
     class Empleados
-    implements ICrud, IFunciones
+    implements ICrud, IVentas, IFunciones
     {
+        private $reporte = new GenerarPDF();
+        private $ventas = new Ventas();
         function Insertar(array $datos)
         {
             $con = new mysqli(s, u, p, bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $q->prepare("INSERT INTO empleados VALUES (null, ?, ?, ?, ?)");
+            $q->prepare("call p_insertarempleados(-1, ?, ?, ?, ?)");
             $q->bind_param('ssss', $datos['nombre'], $datos['noAutos'], $datos['noClientes'], $datos['permisos']);
             $q->execute();
             $q->close();
@@ -22,8 +24,8 @@
             $con = new mysqli(s,u,p,bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $q->prepare("SELECT * FROM empleados WHERE nombre LIKE ?");
-            $nombre='%'.$nombre.'%';
+            $q->prepare("call p_mostrarempleados(?)");
+            //$nombre='%'.$nombre.'%';
             $q->bind_param('s', $nombre);
             $q->execute();
             $q->bind_result($id, $nombret, $noClientes, $noAutos, $permisos);
@@ -50,9 +52,9 @@
             $con = new mysqli(s, u, p, bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $q->prepare("update empleados set noAutos=?, noClientes=?, nombre=?, permisos=? where id=?");
-            $q->bind_param('sssss', $datos['noAutos'], $datos['noClientes'], $datos['nombre'], $datos['permisos'],
-             $datos['id']);
+            $q->prepare("call p_insertarempleados(?, ?, ?, ?, ?)");
+            $q->bind_param('sssss', $datos['idEmpleado'], $datos['nombre'], $datos['noAutos'], 
+            $datos['noClientes'], $datos['permisos']);
             $q->execute();
             $q->close();
         }
@@ -61,17 +63,30 @@
             $con = new mysqli(s, u, p, bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $q->prepare("delete from empleados where id=$id");
+            $q->prepare("delete from empleados where id=?");
+            $q->bind_param('s', $id);
             $q->execute();
             $q->close();
         }
-        function generarReporte()
+        function clientesTotales(array $datos)
         {
-
+            //Se tienen que mandar en el array, el id del empleado, el nombre del empleado, la cantidad de clientes y la fecha
+            //Filtrado por la fecha del día solicitado
+            $this->reporte->GenerarReporte($datos, 'Clientes totales '.$datos['fecha'], 'Clientes_'.$datos['fecha']);
         }
-        function calcularCobro()
+        function calcularCobro(array $datos)
         {
-            
+            $valor=0.0;
+            $con = new mysqli(s, u, p, bd);
+            $con->set_charset("utf8");
+            $q = $con->stmt_init();
+            $q->prepare("select valor from tipoAuto where clasificacion=?");
+            $q->bind_param('s', $datos['clasificacion']);
+            $q->execute();
+            $q->bind_result(doubleval($valor));
+            $pago = $valor * doubleval($datos('cantidad'));
+            $this->ventas->Insertar($datos);
+            $q->close();
         }
     }
 ?>

@@ -58,7 +58,8 @@
             $con = new mysqli(s, u, p, bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $q->prepare("call p_eliminartipoauto($id)");
+            $q->prepare("call p_eliminartipoauto(?)");
+            $q->bind_param('s', $id);
             $q->execute();
             $q->close();
         }
