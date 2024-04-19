@@ -83,8 +83,10 @@
             $q->prepare("select valor from tipoAuto where clasificacion=?");
             $q->bind_param('s', $datos['clasificacion']);
             $q->execute();
-            $q->bind_result(doubleval($valor));
-            $pago = $valor * doubleval($datos('cantidad'));
+            $q->bind_result($valor);
+            $q->fetch();
+            $pago = $valor * doubleval($datos['cantidad']);
+            $datos['pago'] = $pago;
             $this->ventas->Insertar($datos);
             $q->close();
         }

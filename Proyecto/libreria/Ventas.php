@@ -9,7 +9,7 @@
             $con->set_charset("utf8");
             $q = $con->stmt_init();
             $q->prepare("INSERT INTO ventas VALUES (null, ?, ?, ?, ?)");
-            $q->bind_param('ssss', $datos['fkidEmpleado'], $datos['fkidTipoAuto'], $datos['cantidad'],
+            $q->bind_param('ssss', $datos['fkidEmpleado'], $datos['fkidTipoAuto'], $datos['pago'],
             $fecha);
             $q->execute();
             $q->close();
