@@ -53,6 +53,6 @@ foreign key(fkidEmpleado) references empleados(idEmpleado));
 
 /*Seleccionar el id del empleado, el nombre del empleado, la cantidad de clientes atendidos y la fecha de la tabla de ventasTotales y empleados donde las ids de los empleados coincidan*/
 
-/*Seleccionar  el id del empleado, el nombre del empleado, la clasificacion del auto, las unidades, la cantidad de unidades y la fecha, de las tablas de ventas y empleados donde las ids de los empleados coincidan*/
+/*Seleccionar  el id del empleado, el nombre del empleado, la clasificacion del auto, el fkidTipoAuto, las unidades, la cantidad de unidades y la fecha, de las tablas de ventas y empleados donde las ids de los empleados coincidan*/
 
 #Crear un procedure donde se seleccione el empleado que tengan más noClientes de la tabla de ventas totales por una fecha especificada pasada como parámetro
