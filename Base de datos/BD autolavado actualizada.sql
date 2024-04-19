@@ -1,4 +1,4 @@
-CREATE DATABASE Autolavado;
+CREATE DATABASE if NOT exists Autolavado;
 USE Autolavado;
 
 #TABLAS 
@@ -7,7 +7,7 @@ CREATE USER if NOT EXISTS 'userAutolavado'@'localhost' IDENTIFIED BY 'chivas123'
 GRANT ALL PRIVILEGES ON Autolavado.* TO 'userAutolavado'@'localhost';
 FLUSH PRIVILEGES;
 
-DROP TABLE empleados if EXISTS;
+DROP TABLE if EXISTS empleados;
 CREATE TABLE empleados(
 idEmpleado INT AUTO_INCREMENT PRIMARY KEY,
 nombre VARCHAR(50),
@@ -41,7 +41,7 @@ fkidTipoAuto int,
 cantidad double, #cantidad de la unidad de medida
 fecha datetime,
 foreign key(fkidEmpleado) references empleados(idEmpleado),
-foreign key(fkidTipoAuto) references empleados(idTipoAuto));
+foreign key(fkidTipoAuto) references tipoauto(idTipoAuto));
 
 DROP TABLE if EXISTS ventasTotales;
 create table ventasTotales(
@@ -154,27 +154,36 @@ END;
 
 
 #Procedimientos tipoAuto
+DROP TABLE if EXISTS tipoAuto;
+CREATE TABLE tipoAuto(
+idTipoAuto INT AUTO_INCREMENT PRIMARY KEY,
+auto varchar(50),
+clasificacion VARCHAR(50),
+unidad varchar(50), #medida en la que se evalua: piezas, puertas, etc..
+valor DOUBLE); #valor por unidad de medida 
 
 DELIMITER $$
 DROP PROCEDURE if EXISTS p_insertartipoauto;
 CREATE PROCEDURE p_insertartipoauto(
     IN p_idTipoAuto INT,
+    IN p_auto VARCHAR(50),
     IN p_clasificacion VARCHAR(50),
-    IN p_noPuertas INT,
-    IN p_longitud DOUBLE,
-    IN p_pieza INT
+    IN p_unidad VARCHAR(50),
+    IN p_valor DOUBLE
 )
 BEGIN
     DECLARE x INT;
     SELECT COUNT(*) FROM tipoAuto WHERE clasificacion = p_clasificacion INTO x;
     IF x = 0 THEN
         IF p_idTipoAuto < 1 THEN
-            INSERT INTO tipoAuto VALUES (null, p_clasificacion, p_noPuertas, p_longitud, p_pieza); 
+            INSERT INTO tipoAuto VALUES (NULL, p_auto, p_clasificacion, p_unidad, p_valor); 
         ELSE
-            UPDATE tipoAuto SET clasificacion = p_clasificacion, noPuertas = p_noPuertas, longitud = p_longitud, pieza = p_pieza WHERE idTipoAuto = p_idTipoAuto;
+            UPDATE tipoAuto SET  auto=auto, clasificacion = p_clasificacion, unidad = p_unidad, valor = p_valor 
+				WHERE idTipoAuto = p_idTipoAuto;
         END IF;
     ELSE
-        UPDATE tipoAuto SET clasificacion = p_clasificacion, noPuertas = p_noPuertas, longitud = p_longitud, pieza = p_pieza WHERE idTipoAuto = p_idTipoAuto;
+        UPDATE tipoAuto SET auto=auto, clasificacion = p_clasificacion, unidad = p_unidad, valor = p_valor 
+		  WHERE idTipoAuto = p_idTipoAuto;
     END IF;
 END;
 
@@ -200,7 +209,7 @@ END;
 
 #Procedimientos administrador
 
-DELIMITER $$
+/*DELIMITER $$
 DROP PROCEDURE if EXISTS p_insertaradministrador;
 CREATE PROCEDURE p_insertaradministrador(
     IN p_idAdministrador INT,
@@ -228,7 +237,7 @@ in p_idAdministrador INT
 )
 BEGIN
 	delete from administrador where idAdministrador = p_idAdministrador;
-END;
+END;*/
 
 DELIMITER $$
 DROP PROCEDURE if EXISTS p_mostraradministrador;
