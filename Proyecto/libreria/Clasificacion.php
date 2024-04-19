@@ -7,9 +7,8 @@
             $con = new mysqli(s, u, p, bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $q->prepare("p_insertartipoauto(-1, ?, ?, ?, ?)");
-            $q->bind_param('ssss', $datos['clasificacion'], $datos['noPuertas'], $datos['longitud'], 
-            $datos['pieza']);
+            $q->prepare("p_insertartipoauto(-1, ?, ?, ?)");
+            $q->bind_param('sss',$datos['clasificacion'], $datos['unidad'], $datos['valor']);
             $q->execute();
             $q->close();
         }
@@ -17,9 +16,8 @@
         {
             $id=0;
             $clasificacion='';
-            $noPuertas=0;
-            $longitud=0;
-            $pieza=0;
+            $unidad=0;
+            $valor=0;
             $con = new mysqli(s,u,p,bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
@@ -27,19 +25,18 @@
             $nombre='%'.$nombre.'%';
             $q->bind_param('s', $nombre);
             $q->execute();
-            $q->bind_result($id, $clasificacion, $noPuertas, $longitud, $pieza);
+            $q->bind_result($id, $clasificacion, $unidad, $valor);
 
-            $rs = '<table class="table table-bordered table-striped"><thead><tr><th>ID</th><th>'.
-            'Clasificación</th><th>Número de puertas</th><th>Longitud</th><th>Pieza</th>'.
+            $rs = '<table class="table table-bordered table-striped"><thead><tr><th>ID</th>'.
+            '<th>Clasificación</th><th>Unidad de medida</th><th>Valor $</th>'.
             '</tr></thead><tbody>';
 
             while ($q->fetch()) {
                 $rs .= "<tr>
                 <td>$id</td>
                 <td>$clasificacion</td>
-                <td>$noPuertas</td>
-                <td>$longitud</td>
-                <td>$pieza</td>
+                <td>$unidad</td>
+                <td>$valor</td>
                 </tr>";
             }
 
@@ -51,9 +48,8 @@
             $con = new mysqli(s, u, p, bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $q->prepare("p_insertartipoauto(?, ?, ?, ?, ?)");
-            $q->bind_param('sssss', $datos['idTipoAuto'], $datos['clasificacion'], $datos['noPuertas'], $datos['longitud'], 
-            $datos['pieza']);
+            $q->prepare("p_insertartipoauto(?, ?, ?, ?)");
+            $q->bind_param('ssss', $datos['idTipoAuto'], $datos['clasificacion'], $datos['unidad'], $datos['valor']);
             $q->execute();
             $q->close();
         }
@@ -62,7 +58,8 @@
             $con = new mysqli(s, u, p, bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $q->prepare("call p_eliminartipoauto($id)");
+            $q->prepare("call p_eliminartipoauto(?)");
+            $q->bind_param('s', $id);
             $q->execute();
             $q->close();
         }
