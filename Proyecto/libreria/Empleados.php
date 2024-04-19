@@ -4,6 +4,8 @@
     {
         private $reporte = new GenerarPDF();
         private $ventas = new Ventas();
+        private $pagos = new Pagos();
+        private $resultado='';
         function Insertar(array $datos)
         {
             $con = new mysqli(s, u, p, bd);
@@ -74,21 +76,43 @@
             //Filtrado por la fecha del día solicitado
             $this->reporte->GenerarReporte($datos, 'Clientes totales '.$datos['fecha'], 'Clientes_'.$datos['fecha']);
         }
+        /*$q->prepare("select valor from tipoAuto where clasificacion=?");
+        $q->bind_param('s', $datos['clasificacion']);
+        $q->execute();
+        $q->bind_result($valor);
+        $q->fetch();*/
         function calcularCobro(array $datos)
         {
             $valor=0.0;
             $con = new mysqli(s, u, p, bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $q->prepare("select valor from tipoAuto where clasificacion=?");
-            $q->bind_param('s', $datos['clasificacion']);
-            $q->execute();
-            $q->bind_result($valor);
-            $q->fetch();
+            $valor = $this-> Consultas($q, "select valor from tipoAuto where clasificacion=?",
+                $datos['clasificacion']);
             $pago = $valor * doubleval($datos['cantidad']);
             $datos['pago'] = $pago;
+            //Ventas
             $this->ventas->Insertar($datos);
+            //Pagos
+            $cantidadActual=$this-> Consultas($q, "select count(*) from pagos where fecha=?",
+            $datos['fecha']);
+            if($cantidadActual != 0)
+            {
+                $datos['pago'] += $cantidadActual;
+                $this->pagos->Modificar($datos);
+            }
+            else
+                $this->pagos->Insertar($datos);
             $q->close();
+        }
+        function Consultas($q, $consulta, $parametro)
+        {
+            $q->prepare($consulta);
+            $q->bind_param('s', $parametro);
+            $q->execute();
+            $q->bind_result($this->resultado);
+            $q->fetch();
+            return $this->resultado;
         }
     }
 ?>
