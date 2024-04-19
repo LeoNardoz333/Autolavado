@@ -15,7 +15,6 @@
         function Consultar($nombre)
         {
             $id=0;
-            $auto='';
             $clasificacion='';
             $unidad=0;
             $valor=0;

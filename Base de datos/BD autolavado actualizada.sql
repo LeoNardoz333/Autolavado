@@ -113,6 +113,7 @@ DELIMITER $$
 DROP PROCEDURE if EXISTS p_insertarclientes;
 CREATE PROCEDURE p_insertarclientes(
     IN p_idClientes INT,
+    IN p_auto VARCHAR(50),
     IN p_nombre VARCHAR(50),
     IN p_fkidTipoAuto INT,
     IN p_turno INT
@@ -122,17 +123,19 @@ BEGIN
     SELECT COUNT(*) FROM clientes WHERE nombre = p_nombre INTO x;
     IF x = 0 THEN
         IF p_idClientes < 1 THEN
-            INSERT INTO clientes VALUES (null, p_nombre, p_fkidTipoAuto, p_turno); 
+            INSERT INTO clientes VALUES (null, p_nombre, p_auto, p_fkidTipoAuto, p_turno); 
         ELSE
-            UPDATE clientes SET nombre = p_nombre, fkidTipoAuto = p_fkidTipoAuto, turno = p_turno WHERE idClientes = p_idClientes;
+            UPDATE clientes SET nombre = p_nombre, auto = p_auto, fkidTipoAuto = p_fkidTipoAuto, turno = p_turno 
+				WHERE idClientes = p_idClientes;
         END IF;
     ELSE
-        UPDATE clientes SET nombre = p_nombre, fkidTipoAuto = p_fkidTipoAuto, turno = p_turno WHERE idClientes = p_idClientes;
+        UPDATE clientes SET nombre = p_nombre, auto = p_auto, fkidTipoAuto = p_fkidTipoAuto, turno = p_turno 
+		  WHERE idClientes = p_idClientes;
     END IF;
 END;
 
-CALL p_insertarclientes(-1,'prueba cliente',1,5);
-SELECT * FROM clientes;
+#CALL p_insertarclientes(-1,'prueba cliente',1,5);
+#SELECT * FROM clientes;
 
 DELIMITER $$
 DROP PROCEDURE if EXISTS p_eliminarclientes;
@@ -146,10 +149,10 @@ END;
 DELIMITER $$
 DROP PROCEDURE if EXISTS p_mostrarclientes;
 create procedure p_mostrarclientes(
-in p_nombre
+in p_nombre VARCHAR(5)
 )
 BEGIN
-	SELECT * from clientes where nombre = p_nombre;
+	SELECT * from clientes where nombre like p_nombre;
 END;
 
 
