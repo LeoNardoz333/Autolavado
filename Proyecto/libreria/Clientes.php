@@ -11,8 +11,8 @@
             $con = new mysqli(s, u, p, bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $q->prepare("INSERT INTO clientes VALUES (null, ?, ?, ?)");
-            $q->bind_param('sss', $datos['nombre'], $datos['tipoAuto'], $datos['turno']);
+            $q->prepare("INSERT INTO clientes VALUES (null, ?, ?, ?, ?)");
+            $q->bind_param('ssss', $datos['nombre'], $datos['auto'], $datos['fktipoAuto'], $datos['turno']);
             $q->execute();
             $q->close();
         }
@@ -20,23 +20,25 @@
         {
             $id=0;
             $nombret='';
+            $auto='';
             $tipoAuto='';
             $turno='';
             $con = new mysqli(s,u,p,bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $q->prepare("SELECT * FROM clientes WHERE nombre LIKE ?");
+            $q->prepare("call p_mostrarclientes(?)");
             $nombre='%'.$nombre.'%';
             $q->bind_param('s', $nombre);
             $q->execute();
             $q->bind_result($id, $nombret, $tipoAuto,$turno);
 
             $rs = '<table class="table table-bordered table-striped"><thead><tr><th>ID</th><th>'.
-            'Nombre</th><th>Tipo de auto</th><th>Turno</th></tr></thead><tbody>';
+            'Nombre</th><th>Auto</th><th>Tipo de auto</th><th>Turno</th></tr></thead><tbody>';
 
             while ($q->fetch()) {
                 $rs .= "<tr>
                 <td>$id</td>
+                <td>$auto</td>
                 <td>$nombret</td>
                 <td>$tipoAuto</td>
                 <td>$turno</td>
@@ -51,8 +53,8 @@
             $con = new mysqli(s, u, p, bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $q->prepare("update clientes set nombre=?, tipoAuto=?, turno=? where id=?");
-            $q->bind_param('sss', $datos['nombre'], $datos['tipoAuto'], $datos['turno'], $datos['id']);
+            $q->prepare("INSERT INTO clientes VALUES (?, ?, ?, ?, ?)");
+            $q->bind_param('sssss', $datos['idClientes'], $datos['nombre'], $datos['auto'], $datos['fktipoAuto'], $datos['turno']);
             $q->execute();
             $q->close();
         }

@@ -7,8 +7,8 @@
             $con = new mysqli(s, u, p, bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $q->prepare("p_insertartipoauto(-1, ?, ?, ?, ?)");
-            $q->bind_param('ssss', $datos['auto'], $datos['clasificacion'], $datos['unidad'], $datos['valor']);
+            $q->prepare("p_insertartipoauto(-1, ?, ?, ?)");
+            $q->bind_param('sss',$datos['clasificacion'], $datos['unidad'], $datos['valor']);
             $q->execute();
             $q->close();
         }
@@ -26,16 +26,15 @@
             $nombre='%'.$nombre.'%';
             $q->bind_param('s', $nombre);
             $q->execute();
-            $q->bind_result($id, $auto, $clasificacion, $unidad, $valor);
+            $q->bind_result($id, $clasificacion, $unidad, $valor);
 
-            $rs = '<table class="table table-bordered table-striped"><thead><tr><th>ID</th><th>'.
-            'Auto</th><th>Clasificación</th><th>Unidad de medida</th><th>Valor $</th>'.
+            $rs = '<table class="table table-bordered table-striped"><thead><tr><th>ID</th>'.
+            '<th>Clasificación</th><th>Unidad de medida</th><th>Valor $</th>'.
             '</tr></thead><tbody>';
 
             while ($q->fetch()) {
                 $rs .= "<tr>
                 <td>$id</td>
-                <td>$auto</td>
                 <td>$clasificacion</td>
                 <td>$unidad</td>
                 <td>$valor</td>
@@ -50,8 +49,8 @@
             $con = new mysqli(s, u, p, bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $q->prepare("p_insertartipoauto(?, ?, ?, ?, ?)");
-            $q->bind_param('sssss', $datos['idTipoAuto'], $datos['auto'], $datos['clasificacion'], $datos['unidad'], $datos['valor']);
+            $q->prepare("p_insertartipoauto(?, ?, ?, ?)");
+            $q->bind_param('ssss', $datos['idTipoAuto'], $datos['clasificacion'], $datos['unidad'], $datos['valor']);
             $q->execute();
             $q->close();
         }

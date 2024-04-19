@@ -18,7 +18,6 @@ permisos ENUM('admin','usuario'));
 DROP TABLE if EXISTS tipoAuto;
 CREATE TABLE tipoAuto(
 idTipoAuto INT AUTO_INCREMENT PRIMARY KEY,
-auto varchar(50),
 clasificacion VARCHAR(50),
 unidad varchar(50), #medida en la que se evalua: piezas, puertas, etc..
 valor DOUBLE); #valor por unidad de medida 
@@ -55,6 +54,7 @@ DROP TABLE if EXISTS clientes;
 CREATE TABLE clientes(
 idClientes INT AUTO_INCREMENT PRIMARY KEY,
 nombre VARCHAR(50),
+auto varchar(50),
 fkidTipoAuto INT,
 turno INT,
 FOREIGN KEY(fkidTipoAuto) REFERENCES tipoauto (idTipoAuto));
@@ -146,10 +146,10 @@ END;
 DELIMITER $$
 DROP PROCEDURE if EXISTS p_mostrarclientes;
 create procedure p_mostrarclientes(
-in p_idClientes INT
+in p_nombre
 )
 BEGIN
-	SELECT * from clientes where idClientes = p_idClientes;
+	SELECT * from clientes where nombre = p_nombre;
 END;
 
 
@@ -166,7 +166,6 @@ DELIMITER $$
 DROP PROCEDURE if EXISTS p_insertartipoauto;
 CREATE PROCEDURE p_insertartipoauto(
     IN p_idTipoAuto INT,
-    IN p_auto VARCHAR(50),
     IN p_clasificacion VARCHAR(50),
     IN p_unidad VARCHAR(50),
     IN p_valor DOUBLE
@@ -176,13 +175,13 @@ BEGIN
     SELECT COUNT(*) FROM tipoAuto WHERE clasificacion = p_clasificacion INTO x;
     IF x = 0 THEN
         IF p_idTipoAuto < 1 THEN
-            INSERT INTO tipoAuto VALUES (NULL, p_auto, p_clasificacion, p_unidad, p_valor); 
+            INSERT INTO tipoAuto VALUES (NULL, p_clasificacion, p_unidad, p_valor); 
         ELSE
-            UPDATE tipoAuto SET  auto=auto, clasificacion = p_clasificacion, unidad = p_unidad, valor = p_valor 
+            UPDATE tipoAuto SET  clasificacion = p_clasificacion, unidad = p_unidad, valor = p_valor 
 				WHERE idTipoAuto = p_idTipoAuto;
         END IF;
     ELSE
-        UPDATE tipoAuto SET auto=auto, clasificacion = p_clasificacion, unidad = p_unidad, valor = p_valor 
+        UPDATE tipoAuto SET clasificacion = p_clasificacion, unidad = p_unidad, valor = p_valor 
 		  WHERE idTipoAuto = p_idTipoAuto;
     END IF;
 END;
@@ -200,7 +199,7 @@ END;
 DELIMITER $$
 DROP PROCEDURE if EXISTS p_mostrartipoauto;
 create procedure p_mostrartipoauto(
-in p_clasificacion INT
+in p_clasificacion VARCHAR(40)
 )
 BEGIN
 	SELECT * from tipoAuto where clasificacion LIKE p_clasificacion;
