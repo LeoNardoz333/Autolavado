@@ -13,6 +13,7 @@ idEmpleado INT AUTO_INCREMENT PRIMARY KEY,
 nombre VARCHAR(50),
 noAutos INT, 
 noClientes INT,
+pass VARCHAR(50),
 permisos ENUM('admin','usuario'));
 
 DROP TABLE if EXISTS tipoAuto;
@@ -251,3 +252,42 @@ in p_idAdministrador INT
 BEGIN
 	SELECT * from administrador where idAdministrador = p_idAdministrador;
 END;
+
+delimiter //
+CREATE TRIGGER insertar_ventasTotales
+AFTER INSERT ON ventas
+FOR EACH ROW
+BEGIN
+	DECLARE existe INT;
+	SELECT COUNT(*) INTO existe FROM ventastotales WHERE fkidEmpleado = NEW.fkidEmpleado 
+		AND fecha = NEW.fecha;
+	if existe > 0 then
+		UPDATE ventastotales SET noClientes = noClientes + 1 WHERE fkidEmpleado = NEW.fkidEmpleado 
+			AND fecha = NEW.fecha;
+	ELSE
+		INSERT INTO ventastotales values(NULL, NEW.fkidEmpleado, 1, NEW.fecha);
+	END if;
+END//
+delimiter ;
+
+/*Seleccionar el id del empleado, el nombre del empleado, la cantidad de pago y 
+la fecha, de las tablas de pagos y empleados donde la pagos.fkidEmpleado sea igual a empleados.idEmpleado*/
+
+CREATE VIEW v_pagosDiarios AS
+SELECT p.id, e.idEmpleado, e.nombre, p.cantidad, p.fecha FROM pagos p, empleados e
+WHERE p.fkidEmpleado = e.idEmpleado;
+
+/*Seleccionar el id del empleado, el nombre del empleado, la cantidad de clientes atendidos y la fecha de 
+la tabla de ventasTotales y empleados donde las ids de los empleados coincidan*/
+
+CREATE VIEW v_clientesTotales AS
+SELECT v.id, e.idEmpleado, e.nombre, v.noClientes, v.fecha FROM ventasTotales v, empleados e
+WHERE v.fkidEmpleado = e.idEmpleado;
+
+/*Seleccionar  el id del empleado, el nombre del empleado, la clasificacion del auto, el fkidTipoAuto,
+ las unidades, la cantidad de unidades y la fecha, de las tablas de ventas y empleados donde las ids de 
+ los empleados coincidan*/
+ 
+CREATE VIEW v_clientesFecha AS
+SELECT v.id, e.idEmpleado, e.nombre, a.clasificacion, v.cantidad, v.fecha FROM ventas v, empleados e, tipoauto a
+WHERE v.fkidEmpleado = e.idEmpleado AND v.fkidTipoAuto = a.idTipoAuto;
