@@ -10,8 +10,8 @@
                 case 'Clasificacion': return new Clasificacion(); break;
                 case 'Clientes': return new Clientes(); break;
                 case 'Empleados': return new Empleados(); break;
-                /*case 'Pagos': return new Pagos(); break;
-                case 'Ventas': return new Ventas(); break;*/
+                case 'Pagos': return new Pagos(); break;
+                case 'Ventas': return new Ventas(); break;
             }
         }
     }

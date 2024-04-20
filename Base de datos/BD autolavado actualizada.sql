@@ -13,6 +13,7 @@ idEmpleado INT AUTO_INCREMENT PRIMARY KEY,
 nombre VARCHAR(50),
 noAutos INT, 
 noClientes INT,
+pass VARCHAR(50),
 permisos ENUM('admin','usuario'));
 
 DROP TABLE if EXISTS tipoAuto;

@@ -5,7 +5,7 @@
         private $reporte = new GenerarPDF();
         private $ventas = new Ventas();
         private $pagos = new Pagos();
-        private $resultado='';
+        private $resultados = array();
         function Insertar(array $datos)
         {
             $con = new mysqli(s, u, p, bd);
@@ -74,13 +74,14 @@
         {
             //Se tienen que mandar en el array, el id del empleado, el nombre del empleado, la cantidad de clientes y la fecha
             //Filtrado por la fecha del día solicitado
-            $this->reporte->GenerarReporte($datos, 'Clientes totales '.$datos['fecha'], 'Clientes_'.$datos['fecha']);
+            $con = new mysqli(s, u, p, bd);
+            $con->set_charset("utf8");
+            $q = $con->stmt_init();
+            $this->resultados = $this->ConsultasFilas($q, "select * from v_clientesTotales where fecha = ?",
+                $datos['fecha']);
+            $this->reporte->GenerarReporte($this->resultados, 'Clientes totales '.$datos['fecha'], 'Clientes_'.$datos['fecha']);
+            $q->close();
         }
-        /*$q->prepare("select valor from tipoAuto where clasificacion=?");
-        $q->bind_param('s', $datos['clasificacion']);
-        $q->execute();
-        $q->bind_result($valor);
-        $q->fetch();*/
         function calcularCobro(array $datos)
         {
             $valor=0.0;
@@ -105,14 +106,28 @@
                 $this->pagos->Insertar($datos);
             $q->close();
         }
-        function Consultas($q, $consulta, $parametro)
+        function ConsultasFilas($q, $consulta, $parametro)
         {
             $q->prepare($consulta);
             $q->bind_param('s', $parametro);
             $q->execute();
-            $q->bind_result($this->resultado);
+            $result = $q->get_result();
+            $rows = array();
+            while ($row = $result->fetch_assoc()) 
+            {
+                $rows[] = $row;
+            }
+            return $rows;
+        }
+        function Consultas($q, $consulta, $parametro)
+        {
+            $resultado = '';
+            $q->prepare($consulta);
+            $q->bind_param('s', $parametro);
+            $q->execute();
+            $q->bind_result($resultado);
             $q->fetch();
-            return $this->resultado;
+            return $resultado;
         }
     }
 ?>
