@@ -1,7 +1,13 @@
-<hr>
+<style>
+  .fondo4
+  {
+  background-image: linear-gradient(45deg, #6d94ed 24%, #1b21be 51%);
+  }
+</style>
+<body class="fondo4">
 <div>Empleado destacados</div>
 <div class="header-left">
-							<img src="images/alavado.png">
+	<img src="images/alavado.png">
 </div>
 <div class="row">
     <div class="col-6" id="x">
@@ -17,5 +23,5 @@
     <div class="col-6">
         <!-- <?php echo $resultado; ?> -->
     </div>
-
 </div>
+</body>
