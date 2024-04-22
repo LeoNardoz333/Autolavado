@@ -214,10 +214,6 @@ body {
                     Login
                 </a>
             </li>
-
-
-
-
-            <div class="active-bar"></div>
+            <!-- <div class="active-bar"></div> -->
         </ul>
     </nav>
