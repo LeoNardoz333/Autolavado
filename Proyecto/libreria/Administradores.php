@@ -2,8 +2,14 @@
     class Administradores
     implements IPagos, IVentas
     {
-        private $reporte = new GenerarPDF();
+        private $reporte;
         private $resultados = array();
+        
+        public function __construct()
+        {
+            $this->reporte = new GenerarPDF();
+        }
+
         function pagosDiarios(array $datos)
         {
             //Se tienen que mandar en el array, el id del empleado, el nombre del empleado, la cantidad de pago y la fecha

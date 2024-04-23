@@ -108,9 +108,9 @@ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
       <div class="first mt-3 mb-3">
         <img src="images/alavado.png" id="icon" alt="Logo" />
       </div>
-      <form class="mt-3 mb-3">
+      <form class="mt-3 mb-3" method="post" action="login">
         <input type="text" id="login" class="fadeIn second" name="login" placeholder="Usuario">
-        <input type="text" id="password" class="fadeIn third" name="login" placeholder="Contrasena">
+        <input type="text" id="password" class="fadeIn third" name="password" placeholder="Contraseña">
         <button type="button" class="btn btn-primary mt-2 mb-2">Iniciar Sesion</button>
         <button type="button" class="btn btn-info mt-2 mb-2">Registrarse</button>
       </form>

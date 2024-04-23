@@ -2,10 +2,18 @@
     class Empleados
     implements ICrud, IVentas, IFunciones
     {
-        private $reporte = new GenerarPDF();
-        private $ventas = new Ventas();
-        private $pagos = new Pagos();
+        private $reporte;
+        private $ventas;
+        private $pagos;
         private $resultados = array();
+        
+        public function __construct()
+        {
+            $this->reporte = new GenerarPDF();
+            $this->ventas = new Ventas();
+            $this->pagos = new Pagos();
+        }
+
         function Insertar(array $datos)
         {
             $con = new mysqli(s, u, p, bd);
