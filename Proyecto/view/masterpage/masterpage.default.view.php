@@ -8,7 +8,7 @@
 </head>
 <body class="fondo4">
   <div id="contenido">
-    <?php echo $contenido ?>
+    <?php echo $view_content; ?>
   </div>
 </body>
 <script src="dist/js/bootstrap.bundle.min.js"></script>

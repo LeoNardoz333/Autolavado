@@ -1,5 +1,6 @@
+
 <style>
-:root {
+    :root {
     --bg: #F8F8FF;
     --nav-bg: #fff;
     --primary: #040404;
@@ -143,9 +144,6 @@ body {
     transform: translatex(calc(var(--item-width)*3 + var(--gap)*3 + var(--gap)));
 }
 </style>
-
-
-
 <nav class="navigation">
         <ul class="nav-list">
             <li class="active">
