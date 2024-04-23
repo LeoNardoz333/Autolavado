@@ -1,22 +1,22 @@
 <?php
 session_start();
-require 'libreria/Login.php';
 require 'config.php';
-$p = array();
-$validar = new Login();
+require 'libreria/Login.php';
 $p = array();
 $p['usuario']='';
-if(isset($_POST['login']) && isset($_POST['pass']))
+if(isset($_POST['login']) && isset($_POST['password']))
 {
     $validar = new Login();
-    $p['usuario'] = $validar->validar($_POST['login'], $_POST['pass']);
+    $p['usuario'] = $validar->validar($_POST['login'], $_POST['password']);
     if($p['usuario'] == 'usuario' || $p['usuario'] == 'admin')
     {
-        View('RClientes',$p);
+        View('menu',$p);
+        View('home',$p);
     }
     else
     {
-        View('Login',$p);
+        View('menu',$p);
+        View('login',$p);
     }
 }
 else 

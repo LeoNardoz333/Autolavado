@@ -13,8 +13,7 @@ CREATE TABLE empleados(
 idEmpleado INT AUTO_INCREMENT PRIMARY KEY,
 nombre VARCHAR(50),
 noAutos INT, 
-noClientes INT,
-pass VARCHAR(50));
+noClientes INT);
 
 CREATE TABLE usuarios(
 idUsuario INT AUTO_INCREMENT PRIMARY KEY,
