@@ -1,9 +1,10 @@
 <?php
 session_start();
-include 'view/Menu.view.php';
-include 'view/Login.view.php';
 require 'libreria/Login.php';
 require 'config.php';
+$p = array();
+View('menu',$p);
+View('login',$p);
 $validar = new Login();
 $p = array();
 $p['usuario']='';

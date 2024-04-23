@@ -1,4 +1,5 @@
 <?php
 session_start();
-include 'view/Menu.view.php';
-include 'view/RClientes.view.php';
+$p = array();
+View('menu',$p);
+View('rclientes',$p);

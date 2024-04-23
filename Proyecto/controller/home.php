@@ -14,11 +14,8 @@ require 'libreria/Pagos.php';
 require 'libreria/Ventas.php';
 require 'libreria/Factory.php';
 
-// Aquí incluyes el contenido de home.view.php en una variable
-ob_start();
+$p = array();
+View('menu',$p);
+View('home',$p);
 
-$contenido = ob_get_clean();
-// Incluyes masterpage.default.view.php y pasas el contenido de home.view.php como parámetro
-include 'view/home.view.php';
-include 'view/Menu.view.php';
 ?>
