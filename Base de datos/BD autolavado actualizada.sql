@@ -1,4 +1,5 @@
-CREATE DATABASE if NOT exists Autolavado;
+DROP DATABASE if EXISTS Autolavado;
+CREATE DATABASE Autolavado;
 USE Autolavado;
 
 #TABLAS 
@@ -13,8 +14,15 @@ idEmpleado INT AUTO_INCREMENT PRIMARY KEY,
 nombre VARCHAR(50),
 noAutos INT, 
 noClientes INT,
-pass VARCHAR(50),
-permisos ENUM('admin','usuario'));
+pass VARCHAR(50));
+
+CREATE TABLE usuarios(
+idUsuario INT AUTO_INCREMENT PRIMARY KEY,
+fkidEmpleado INT,
+usuario VARCHAR(50),
+contrasena VARCHAR(50),
+permisos ENUM('admin','usuario'),
+FOREIGN KEY(fkidEmpleado) REFERENCES empleados(idEmpleado));
 
 DROP TABLE if EXISTS tipoAuto;
 CREATE TABLE tipoAuto(
