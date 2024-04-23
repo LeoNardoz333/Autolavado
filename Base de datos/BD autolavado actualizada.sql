@@ -87,14 +87,14 @@ BEGIN
     SELECT COUNT(*) FROM empleados WHERE nombre = p_nombre INTO x;
     IF x = 0 THEN
         IF p_idEmpleado < 1 THEN
-            INSERT INTO empleados VALUES (null, p_nombre, p_noAutos, p_noClientes, p_permisos); 
+            INSERT INTO empleados VALUES (null, p_nombre, p_noAutos, p_noClientes); 
         ELSE
-            UPDATE empleados SET nombre = p_nombre, noAutos = p_noAutos, noClientes = p_noClientes,
-				 permisos = p_permisos WHERE idEmpleado = p_idEmpleado;
+            UPDATE empleados SET nombre = p_nombre, noAutos = p_noAutos, noClientes = p_noClientes
+				 WHERE idEmpleado = p_idEmpleado;
         END IF;
     ELSE
         UPDATE empleados SET nombre = p_nombre, noAutos = p_noAutos, noClientes = p_noClientes, 
-		  permisos = p_permisos WHERE idEmpleado = p_idEmpleado;
+		   WHERE idEmpleado = p_idEmpleado;
     END IF;
 END;
 
