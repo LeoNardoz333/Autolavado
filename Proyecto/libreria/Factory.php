@@ -5,7 +5,7 @@
         {
             switch($tipo)
             {
-                case 'Login': return new Login(); break;
+                //case 'Login': return new Login(); break;
                 case 'Administradores': return new Administradores(); break;
                 case 'Clasificacion': return new Clasificacion(); break;
                 case 'Clientes': return new Clientes(); break;

@@ -1,6 +1,6 @@
 <?php
     interface IVentas
     {
-        function clientesTotales();
+        function clientesTotales(array $datos);
     }
 ?>

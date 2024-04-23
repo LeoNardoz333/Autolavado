@@ -1,9 +1,9 @@
 <?php
     interface ICrud
     {
-        function Insertar();
-        function Consultar();
-        function Modificar();
-        function Borrar();
+        function Insertar(array $datos);
+        function Consultar($filtro);
+        function Modificar(array $datos);
+        function Borrar($id);
     }
 ?>

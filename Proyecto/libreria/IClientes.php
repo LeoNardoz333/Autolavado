@@ -1,6 +1,6 @@
 <?php
     interface IClientes
     {
-        function turnoClientes();
+        function turnoClientes($nombre);
     }
 ?>

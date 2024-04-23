@@ -1,0 +1,214 @@
+CREATE DATABASE Autolavado;
+
+#TABLAS 
+
+CREATE USER if NOT EXISTS 'userAutolavado'@'localhost' IDENTIFIED BY 'chivas123';
+GRANT ALL PRIVILEGES ON Etiquetas.* TO 'userAutolavado'@'localhost';
+FLUSH PRIVILEGES;
+
+CREATE TABLE empleados(
+idEmpleado INT AUTO_INCREMENT PRIMARY KEY,
+nombre VARCHAR(50),
+noAutos INT, 
+noClientes INT,
+permisos ENUM('admin','usuario'));
+
+CREATE TABLE clientes(
+idClientes INT AUTO_INCREMENT PRIMARY KEY,
+nombre VARCHAR(50),
+fkidTipoAuto INT,
+turno INT,
+FOREIGN KEY(fkidTipoAuto) REFERENCES tipoauto (idTipoAuto));
+
+CREATE TABLE tipoAuto(
+idTipoAuto INT AUTO_INCREMENT PRIMARY KEY,
+clasificacion VARCHAR(50),
+noPuertas INT,
+longitud DOUBLE,
+pieza INT);
+
+CREATE TABLE administrador(
+idAdministrador INT AUTO_INCREMENT PRIMARY KEY,
+pagosEmpleados DOUBLE,
+fkidEmpleado INT,
+FOREIGN KEY(fkidEmpleado) REFERENCES empleados(idEmpleado));
+
+
+
+#PROCEDIMIENTOS
+
+#Procedimiento para empleados
+
+DELIMITER $$
+DROP PROCEDURE if EXISTS p_insertarempleados;
+CREATE PROCEDURE p_insertarempleados(
+    IN p_idEmpleado INT,
+    IN p_nombre VARCHAR(50),
+    IN p_noAutos INT,
+    IN p_noClientes INT,
+    IN p_permisos ENUM('admin','usuario')
+)
+BEGIN
+    DECLARE x INT;
+    SELECT COUNT(*) FROM empleados WHERE nombre = p_nombre INTO x;
+    IF x = 0 THEN
+        IF p_idEmpleado < 1 THEN
+            INSERT INTO empleados VALUES (null, p_nombre, p_noAutos, p_noClientes, p_permisos); 
+        ELSE
+            UPDATE empleados SET nombre = p_nombre, noAutos = p_noAutos, noClientes = p_noClientes, permisos = p_permisos WHERE idEmpleado = p_idEmpleado;
+        END IF;
+    ELSE
+        UPDATE empleados SET nombre = p_nombre, noAutos = p_noAutos, noClientes = p_noClientes, permisos = p_permisos WHERE idEmpleado = p_idEmpleado;
+    END IF;
+END;
+
+DELIMITER $$
+DROP PROCEDURE if EXISTS p_eliminarempleados;
+create procedure p_eliminarempleados(
+in p_idEmpleado INT
+)
+BEGIN
+	delete from empleados where idEmpleado = p_idEmpleado;
+END;
+
+DELIMITER $$
+DROP PROCEDURE if EXISTS p_mostrarempleados;
+create procedure p_mostrarempleados(
+in p_nombre VARCHAR(50)
+)
+BEGIN
+	select * from empleados where nombre like concat('%',p_nombre,'%');
+END;
+
+
+//Procedimiento para clientes
+
+DELIMITER $$
+DROP PROCEDURE if EXISTS p_insertarclientes;
+CREATE PROCEDURE p_insertarclientes(
+    IN p_idClientes INT,
+    IN p_nombre VARCHAR(50),
+    IN p_fkidTipoAuto INT,
+    IN p_turno INT
+)
+BEGIN
+    DECLARE x INT;
+    SELECT COUNT(*) FROM clientes WHERE nombre = p_nombre INTO x;
+    IF x = 0 THEN
+        IF p_idClientes < 1 THEN
+            INSERT INTO clientes VALUES (null, p_nombre, p_fkidTipoAuto, p_turno); 
+        ELSE
+            UPDATE clientes SET nombre = p_nombre, fkidTipoAuto = p_fkidTipoAuto, turno = p_turno WHERE idClientes = p_idClientes;
+        END IF;
+    ELSE
+        UPDATE clientes SET nombre = p_nombre, fkidTipoAuto = p_fkidTipoAuto, turno = p_turno WHERE idClientes = p_idClientes;
+    END IF;
+END;
+
+CALL p_insertarclientes(-1,'prueba cliente',1,5);
+SELECT * FROM clientes;
+
+DELIMITER $$
+DROP PROCEDURE if EXISTS p_eliminarclientes;
+create procedure p_eliminarclientes(
+in p_idClientes INT
+)
+BEGIN
+	delete from clientes where idClientes = p_idClientes;
+END;
+
+DELIMITER $$
+DROP PROCEDURE if EXISTS p_mostrarclientes;
+create procedure p_mostrarclientes(
+in p_idClientes INT
+)
+BEGIN
+	SELECT * from clientes where idClientes = p_idClientes;
+END;
+
+
+#Procedimientos tipoAuto
+
+DELIMITER $$
+DROP PROCEDURE if EXISTS p_insertartipoauto;
+CREATE PROCEDURE p_insertartipoauto(
+    IN p_idTipoAuto INT,
+    IN p_clasificacion VARCHAR(50),
+    IN p_noPuertas INT,
+    IN p_longitud DOUBLE,
+    IN p_pieza INT
+)
+BEGIN
+    DECLARE x INT;
+    SELECT COUNT(*) FROM tipoAuto WHERE clasificacion = p_clasificacion INTO x;
+    IF x = 0 THEN
+        IF p_idTipoAuto < 1 THEN
+            INSERT INTO tipoAuto VALUES (null, p_clasificacion, p_noPuertas, p_longitud, p_pieza); 
+        ELSE
+            UPDATE tipoAuto SET clasificacion = p_clasificacion, noPuertas = p_noPuertas, longitud = p_longitud, pieza = p_pieza WHERE idTipoAuto = p_idTipoAuto;
+        END IF;
+    ELSE
+        UPDATE tipoAuto SET clasificacion = p_clasificacion, noPuertas = p_noPuertas, longitud = p_longitud, pieza = p_pieza WHERE idTipoAuto = p_idTipoAuto;
+    END IF;
+END;
+
+
+DELIMITER $$
+DROP PROCEDURE if EXISTS p_eliminartipoauto;
+create procedure p_eliminartipoauto(
+in p_idTipoAuto INT
+)
+BEGIN
+	delete from tipoAuto where idTipoAuto = p_idTipoAuto;
+END;
+
+DELIMITER $$
+DROP PROCEDURE if EXISTS p_mostrartipoauto;
+create procedure p_mostrartipoauto(
+in p_idTipoAuto INT
+)
+BEGIN
+	SELECT * from tipoAuto where idTipoAuto = p_idTipoAuto;
+END;
+
+
+#Procedimientos administrador
+
+DELIMITER $$
+DROP PROCEDURE if EXISTS p_insertaradministrador;
+CREATE PROCEDURE p_insertaradministrador(
+    IN p_idAdministrador INT,
+    IN p_pagosEmpleados DOUBLE,
+    IN p_fkidEmpleado INT
+)
+BEGIN
+    DECLARE x INT;
+    SELECT COUNT(*) FROM administrador WHERE pagosEmpleados = p_pagosEmpleados INTO x;
+    IF x = 0 THEN
+        IF p_idAdministrador < 1 THEN
+            INSERT INTO administrador VALUES (null, p_pagosEmpleados, p_fkidEmpleado); 
+        ELSE
+            UPDATE administrador SET pagosEmpleados = p_pagosEmpleados, fkidEmpleado = p_fkidEmpleado WHERE idAdministrador = p_idAdministrador;
+        END IF;
+    ELSE
+        UPDATE administrador SET pagosEmpleados = p_pagosEmpleados, fkidEmpleado = p_fkidEmpleado WHERE idAdministrador = p_idAdministrador;
+    END IF;
+END;
+
+DELIMITER $$
+DROP PROCEDURE if EXISTS p_eliminaradministrador;
+create procedure p_eliminaradministrador(
+in p_idAdministrador INT
+)
+BEGIN
+	delete from administrador where idAdministrador = p_idAdministrador;
+END;
+
+DELIMITER $$
+DROP PROCEDURE if EXISTS p_mostraradministrador;
+create procedure p_mostraradministrador(
+in p_idAdministrador INT
+)
+BEGIN
+	SELECT * from administrador where idAdministrador = p_idAdministrador;
+END;
