@@ -3,8 +3,6 @@ session_start();
 require 'libreria/Login.php';
 require 'config.php';
 $p = array();
-View('menu',$p);
-View('login',$p);
 $validar = new Login();
 $p = array();
 $p['usuario']='';
@@ -20,4 +18,9 @@ if(isset($_POST['login']) && isset($_POST['pass']))
     {
         View('Login',$p);
     }
+}
+else 
+{
+    View('menu',$p);
+    View('login',$p);
 }
