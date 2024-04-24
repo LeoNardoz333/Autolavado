@@ -68,8 +68,8 @@
                     $(".editar").click(function(){
                         let _ide = $(this).attr("_ide");
                         alert("Yeii" + _ide);
-                        $.post("modificarEmpleado",{ide:_ide}, function(mensaje){
-                            $("#X").html(mensaje);
+                        $.post("modificarempleado",{ide:_ide}, function(mensaje){
+                            $("#x").html(mensaje);
                         });
                     });
                 </script>';
