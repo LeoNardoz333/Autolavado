@@ -1,3 +1,11 @@
+<style>
+  .fondo4
+  {
+    /* background-image: linear-gradient(90deg, #6dd5ed 10%, #4567e4 90%); */
+    background-image: linear-gradient(90deg, #000042 0%, #4567e4 89%);
+  }
+</style>
+<body class="fondo4">
   <div class="wrapper fadeInDown d-flex align-items-center justify-content-center">
     <div id="formContent" class="flex-column">
       <div>
@@ -19,3 +27,4 @@
         </div>
     </div>
   </div>
+</body>
