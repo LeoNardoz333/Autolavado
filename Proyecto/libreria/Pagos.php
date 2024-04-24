@@ -56,6 +56,10 @@
             $q->execute();
             $q->close();
         }
+        function ConsultaID($id)
+        {
+            
+        }
         function Borrar($id)
         {
             $con = new mysqli(s, u, p, bd);

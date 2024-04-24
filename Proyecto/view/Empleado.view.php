@@ -5,7 +5,7 @@
 </div>
 <div class="row">
     <div class="col-6" id="x">
-        <form method="post" action="home">
+        <form method="post" action="empleado">
             Nombre <input type="text" name="txtNombre" placeholder="Nombre Empleado" class="form-control"> 
             Total de autos <input type="number" name="txtTAutos" placeholder="Total de autos" class="form-control">
             Numero de clientes <input type="text" name="txtClientes" placeholder="Total de clientes atendidos" class="form-control">
@@ -15,6 +15,6 @@
         </form>
     </div>
     <div class="col-6">
-        <!-- <?php echo $resultado; ?> -->
+        <?php echo $resultado; ?>
     </div>
 </div>
