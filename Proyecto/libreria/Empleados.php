@@ -19,8 +19,9 @@
             $con = new mysqli(s, u, p, bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $q->prepare("call p_insertarempleados(-1, ?, ?, ?, ?)");
-            $q->bind_param('ssss', $datos['nombre'], $datos['noAutos'], $datos['noClientes'], $datos['permisos']);
+            $nombre = $datos['nombre'];
+            $q->prepare("CALL p_insertarempleados(-1, ?)");
+            $q->bind_param('s', $nombre);
             $q->execute();
             $q->close();
         }
@@ -28,52 +29,82 @@
         {
             $id=0;
             $nombret='';
-            $noClientes=0;
-            $noAutos=0;
-            $permisos='';
+            $filas =0;
             $con = new mysqli(s,u,p,bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
             $q->prepare("call p_mostrarempleados(?)");
-            //$nombre='%'.$nombre.'%';
+            $nombre='%'.$nombre.'%';
             $q->bind_param('s', $nombre);
             $q->execute();
-            $q->bind_result($id, $nombret, $noClientes, $noAutos, $permisos);
-
-            $rs = '<table class="table table-bordered table-striped"><thead><tr><th>ID</th><th>'.
-            'Nombre</th><th>Número de clientes</th><th>Número de autos</th><th>Permisos</th>'.
-            '</tr></thead><tbody>';
-
-            while ($q->fetch()) {
-                $rs .= "<tr>
-                <td>$id</td>
-                <td>$nombret</td>
-                <td>$noClientes</td>
-                <td>$noAutos</td>
-                <td>$permisos</td>
-                </tr>";
+            $q->store_result();
+            $filas = $q->num_rows;
+            if($filas > 0)
+            {
+                $q->bind_result($id, $nombret);
+    
+                $rs = '<table class="table table-bordered table-striped"><thead><tr><th>ID</th><th>'.
+                'Nombre</th>'.
+                '</tr></thead><tbody>';
+    
+                while ($q->fetch()) {
+                    $rs .= '<tr>
+                    <td>'.$id.'</td>
+                    <td>'.$nombret.'</td>
+                    <td><form method="post" action="empleado">
+                            <button> Eliminar </button>
+                            <input type="hidden" name="_id" value="'.$id.'">
+                        </form>
+                    </td>
+                    <td>
+                        <button class="editar" _ide="'.$id.'"> Editar </button>
+                    </td>
+                    </tr>';
+                }
+    
+                $q->close();
+                return $rs.'</tbody></table>
+                <script>
+                    $(".editar").click(function(){
+                        let _ide = $(this).attr("_ide");
+                        alert("Yeii" + _ide);
+                        $.post("modificarempleado",{ide:_ide}, function(mensaje){
+                            $("#x").html(mensaje);
+                        });
+                    });
+                </script>';
             }
-
-            $q->close();
-            return $rs.'</tbody></table>';
+            else return 'Aún no existen registros.';
         }
         function Modificar(array $datos)
         {
             $con = new mysqli(s, u, p, bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $q->prepare("call p_insertarempleados(?, ?, ?, ?, ?)");
-            $q->bind_param('sssss', $datos['idEmpleado'], $datos['nombre'], $datos['noAutos'], 
-            $datos['noClientes'], $datos['permisos']);
+            $q->prepare("call p_insertarempleados(?, ?)");
+            $q->bind_param('ss', $datos['idEmpleado'], $datos['nombre']);
             $q->execute();
             $q->close();
+        }
+        function ConsultaID($id)
+        {
+            $con = new mysqli(s,u,p,bd);
+            $con->set_charset("utf8");
+            $q = $con->stmt_init();
+            $q->prepare("select * from empleados where id=?");
+            $q->bind_param('s', $id);
+            $q->execute();
+            $q->bind_result($id,$nombre);
+            $q->fetch();
+            $q->close();
+            return array($id,$nombre);
         }
         function Borrar($id)
         {
             $con = new mysqli(s, u, p, bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $q->prepare("delete from empleados where id=?");
+            $q->prepare("delete from empleados where idEmpleado=?");
             $q->bind_param('s', $id);
             $q->execute();
             $q->close();

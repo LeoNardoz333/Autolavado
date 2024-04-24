@@ -16,8 +16,8 @@
       </div>
       <form class="mt-3 mb-3">
         <input type="text" id="login" class="fadeIn second" name="login" placeholder="Usuario">
-        <input type="text" id="password" class="fadeIn third" name="pass" placeholder="Contraseña">
-        <button type="button" class="btn btn-primary mt-2 mb-2">Iniciar Sesion</button>
+        <input type="text" id="password" class="fadeIn third" name="password" placeholder="Contraseña">
+        <button type="submit" class="btn btn-primary mt-2 mb-2">Iniciar Sesion</button>
         <button type="button" class="btn btn-info mt-2 mb-2">Registrarse</button>
       </form>
       <div id="formFooter">
@@ -27,4 +27,8 @@
         </div>
     </div>
   </div>
-</body>
+    <div>
+      <?php
+      echo $usuario;
+      ?>
+    </div>
