@@ -32,11 +32,11 @@
             $nombret='';
             $auto='';
             $tipoAuto='';
-            $turno='';
+            $turno=0;
             $con = new mysqli(s,u,p,bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $q->prepare("call p_mostrarclientes(?)");
+            $q->prepare("SELECT * FROM v_clientes where nombre like ?");
             $nombre='%'.$nombre.'%';
             $q->bind_param('s', $nombre);
             $q->execute();
@@ -51,8 +51,16 @@
                 <td>$nombret</td>
                 <td>$auto</td>
                 <td>$tipoAuto</td>
-                <td>$turno</td>
-                </tr>";
+                <td>$turno</td>".'
+                <td><form method="post" action="rclientes">
+                        <button> Eliminar </button>
+                        <input type="hidden" name="_id" value="'.$id.'">
+                    </form>
+                </td>
+                <td>
+                    <button class="editar" _ide="'.$id.'"> Editar </button>
+                </td>
+                </tr>';
             }
 
             $q->close();
@@ -72,7 +80,8 @@
             $con->set_charset("utf8");
             $q = $con->stmt_init();
             $q->prepare("call p_insertarclientes(?, ?, ?, ?, ?)");
-            $q->bind_param('sssss', $datos['idClientes'], $datos['nombre'], $datos['auto'], $datos['fktipoAuto'], $datos['turno']);
+            $q->bind_param('sssss', $datos['idClientes'], $datos['nombre'], 
+            $datos['auto'], $datos['fktipoAuto'], $datos['turno']);
             $q->execute();
             $q->close();
         }
@@ -86,17 +95,17 @@
             where c.fkidTipoAuto = t.idTipoAuto and t.idTipoAuto = ?");
             $q->bind_param('s', $id);
             $q->execute();
-            $q->bind_result($id,$idTipoAuto, $nombre, $auto, $clasificicacion, $turno);
+            $q->bind_result($id,$idTipoAuto, $nombre, $auto, $clasificicacion, $turno, $cantidad);
             $q->fetch();
             $q->close();
-            return array($id,$idTipoAuto,$nombre, $auto, $clasificicacion, $turno);
+            return array($id,$idTipoAuto,$nombre, $auto, $clasificicacion, $turno, $cantidad);
         }
         function Borrar($id)
         {
             $con = new mysqli(s, u, p, bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $q->prepare("delete from clientes where id=?");
+            $q->prepare("delete from clientes where idClientes=?");
             $q->bind_param('s', $id);
             $q->execute();
             $q->close();

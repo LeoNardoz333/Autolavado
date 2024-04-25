@@ -154,7 +154,7 @@ BEGIN
 	delete from clientes where idClientes = p_idClientes;
 END;
 
-DELIMITER $$
+/*DELIMITER $$
 DROP PROCEDURE if EXISTS p_mostrarclientes;
 create procedure p_mostrarclientes(
 in p_nombre VARCHAR(50)
@@ -162,7 +162,7 @@ in p_nombre VARCHAR(50)
 BEGIN
 	SELECT c.idClientes, c.nombre, c.auto, t.clasificacion, c.turno from clientes c, tipoauto t 
 	where nombre like p_nombre AND c.fkidTipoAuto = t.idTipoAuto;
-END;
+END;*/
 
 #Procedimientos tipoAuto
 DROP TABLE if EXISTS tipoAuto;
@@ -303,4 +303,8 @@ FROM clientes
 ORDER BY idClientes DESC
 LIMIT 1;
 
+CREATE VIEW v_clientes as
+SELECT c.idClientes, c.nombre, c.auto, t.clasificacion, c.turno from clientes c, tipoauto t 
+	where c.fkidTipoAuto = t.idTipoAuto;
+	
 SELECT * FROM v_turno;
