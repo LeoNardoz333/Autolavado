@@ -12,7 +12,7 @@
 </div>
 <div class="row">
     <div class="col-6" id="x">
-        <form method="post" action="home">
+        <form method="post" action="rclientes">
             Nombre <input type="text" name="txtNombre" placeholder="Nombre Cliente" class="form-control"> 
             Auto <input type="text" name="txtAuto" placeholder="Auto" class="form-control">
 
@@ -32,8 +32,6 @@
     while ($row = $res->fetch_assoc()) {
         $result[] = $row;
     }
-    $q->close();
-    $con->close();
     if (!empty($result)) {
         foreach ($result as $row) {
             echo '<option value="' . $row["idTipoAuto"] . '">' . $row["clasificacion"] . "</option>";
@@ -51,15 +49,25 @@
     <option value="3">Tractocamion</option>
   </select>
 </div> -->
-            Cantidad <input type="text" name="txtCaracteristica" placeholder="Caracteristica" class="form-control"> 
-            Turno <input type="text" name="txtTurno" placeholder="Turno" class="form-control" readonly>
+            Cantidad <input type="text" name="txtCaracteristica" placeholder="Caracteristica" class="form-control">
+            <?php 
+            $turno = 0;
+            $w = $con->stmt_init();
+            $w->prepare("select * from v_turno");
+            $w->execute();
+            $w->bind_result($turno);
+            $w->fetch();
+            echo
+            'Turno <input type="text" name="txtTurno" placeholder="Turno" class="form-control"'.
+            'value="'.($turno + 1).'" readonly>';
+            ?>
             <button type="submit" class="btn btn-primary">
                 Guardar
             </button>
         </form>
     </div>
     <div class="col-6">
-        <!-- <?php echo $resultado; ?> -->
+        <?php echo $resultado; ?>
     </div>
 </div>
 </body>

@@ -121,8 +121,8 @@ DELIMITER $$
 DROP PROCEDURE if EXISTS p_insertarclientes;
 CREATE PROCEDURE p_insertarclientes(
     IN p_idClientes INT,
-    IN p_auto VARCHAR(50),
     IN p_nombre VARCHAR(50),
+    IN p_auto VARCHAR(50),
     IN p_fkidTipoAuto INT,
     IN p_turno INT
 )
@@ -157,12 +157,12 @@ END;
 DELIMITER $$
 DROP PROCEDURE if EXISTS p_mostrarclientes;
 create procedure p_mostrarclientes(
-in p_nombre VARCHAR(5)
+in p_nombre VARCHAR(50)
 )
 BEGIN
-	SELECT * from clientes where nombre like p_nombre;
+	SELECT c.idClientes, c.nombre, c.auto, t.clasificacion, c.turno from clientes c, tipoauto t 
+	where nombre like p_nombre AND c.fkidTipoAuto = t.idTipoAuto;
 END;
-
 
 #Procedimientos tipoAuto
 DROP TABLE if EXISTS tipoAuto;
@@ -296,3 +296,11 @@ WHERE v.fkidEmpleado = e.idEmpleado;
 CREATE VIEW v_clientesFecha AS
 SELECT v.id, e.idEmpleado, e.nombre, a.clasificacion, v.cantidad, v.fecha FROM ventas v, empleados e, tipoauto a
 WHERE v.fkidEmpleado = e.idEmpleado AND v.fkidTipoAuto = a.idTipoAuto;
+
+CREATE VIEW v_turno AS
+SELECT turno
+FROM clientes
+ORDER BY idClientes DESC
+LIMIT 1;
+
+SELECT * FROM v_turno;

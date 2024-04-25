@@ -40,7 +40,7 @@
             $nombre='%'.$nombre.'%';
             $q->bind_param('s', $nombre);
             $q->execute();
-            $q->bind_result($id, $nombret, $tipoAuto,$turno);
+            $q->bind_result($id, $nombret, $auto, $tipoAuto,$turno);
 
             $rs = '<table class="table table-bordered table-striped"><thead><tr><th>ID</th><th>'.
             'Nombre</th><th>Auto</th><th>Tipo de auto</th><th>Turno</th></tr></thead><tbody>';
@@ -48,15 +48,23 @@
             while ($q->fetch()) {
                 $rs .= "<tr>
                 <td>$id</td>
-                <td>$auto</td>
                 <td>$nombret</td>
+                <td>$auto</td>
                 <td>$tipoAuto</td>
                 <td>$turno</td>
                 </tr>";
             }
 
             $q->close();
-            return $rs.'</tbody></table>';
+            return $rs.'</tbody></table>
+            <script>
+                $(".editar").click(function(){
+                    let _ide = $(this).attr("_ide");
+                    $.post("modificarclientes",{ide:_ide}, function(mensaje){
+                        $("#x").html(mensaje);
+                    });
+                });
+            </script>';
         }
         function Modificar(array $datos)
         {
@@ -70,7 +78,18 @@
         }
         function ConsultaID($id)
         {
-            
+            $con = new mysqli(s,u,p,bd);
+            $con->set_charset("utf8");
+            $q = $con->stmt_init();
+            $q->prepare("SELECT c.idClientes, t.idTipoAuto, c.nombre, c.auto, t.clasificacion, c.turno, p.cantidad".
+            " from clientes c, tipoauto t, pagos p "." 
+            where c.fkidTipoAuto = t.idTipoAuto and t.idTipoAuto = ?");
+            $q->bind_param('s', $id);
+            $q->execute();
+            $q->bind_result($id,$idTipoAuto, $nombre, $auto, $clasificicacion, $turno);
+            $q->fetch();
+            $q->close();
+            return array($id,$idTipoAuto,$nombre, $auto, $clasificicacion, $turno);
         }
         function Borrar($id)
         {
