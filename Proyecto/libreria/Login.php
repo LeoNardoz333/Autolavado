@@ -6,9 +6,9 @@ class Login
         $con = new mysqli(s, u, p, bd);
         $con->set_charset("utf8");
         $q = $con->stmt_init();
-        $usuarioBD = $this->Consultas($q, "select nombre from empleados where nombre=?",$usuario);
-        $passBD = $this->Consultas($q, "select pass from empleados where nombre=?", $usuario);
-        $permisos = $this->Consultas($q, "select permisos from empleados where nombre=?", $usuario);
+        $usuarioBD = $this->Consultas($q, "select usuario from usuarios where usuario=?",$usuario);
+        $passBD = $this->Consultas($q, "select contrasena from usuarios where usuario=?", $usuario);
+        $permisos = $this->Consultas($q, "select permisos from usuarios where usuario=?", $usuario);
         $q->close();
         //Validar
         if(!empty($usuarioBD) || $usuarioBD!=null)

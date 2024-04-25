@@ -13,7 +13,8 @@
 </body>
 <script src="dist/js/bootstrap.bundle.min.js"></script>
 <script src="/Proyecto/javascript/script.js"></script>
+  <script src="jquery/jquery.min.js"></script>
 
 
-
+</script>
 </html>

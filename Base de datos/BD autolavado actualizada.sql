@@ -11,10 +11,7 @@ FLUSH PRIVILEGES;
 DROP TABLE if EXISTS empleados;
 CREATE TABLE empleados(
 idEmpleado INT AUTO_INCREMENT PRIMARY KEY,
-nombre VARCHAR(50),
-noAutos INT, 
-noClientes INT,
-pass VARCHAR(50));
+nombre VARCHAR(50));
 
 CREATE TABLE usuarios(
 idUsuario INT AUTO_INCREMENT PRIMARY KEY,
@@ -78,26 +75,26 @@ DELIMITER $$
 DROP PROCEDURE if EXISTS p_insertarempleados;
 CREATE PROCEDURE p_insertarempleados(
     IN p_idEmpleado INT,
-    IN p_nombre VARCHAR(50),
-    IN p_noAutos INT,
-    IN p_noClientes INT,
-    IN p_permisos ENUM('admin','usuario')
+    IN p_nombre VARCHAR(50)
 )
 BEGIN
     DECLARE x INT;
     SELECT COUNT(*) FROM empleados WHERE nombre = p_nombre INTO x;
     IF x = 0 THEN
         IF p_idEmpleado < 1 THEN
-            INSERT INTO empleados VALUES (null, p_nombre, p_noAutos, p_noClientes, p_permisos); 
+            INSERT INTO empleados VALUES (null, p_nombre); 
         ELSE
-            UPDATE empleados SET nombre = p_nombre, noAutos = p_noAutos, noClientes = p_noClientes,
-				 permisos = p_permisos WHERE idEmpleado = p_idEmpleado;
+            UPDATE empleados SET nombre = p_nombre
+				 WHERE idEmpleado = p_idEmpleado;
         END IF;
     ELSE
-        UPDATE empleados SET nombre = p_nombre, noAutos = p_noAutos, noClientes = p_noClientes, 
-		  permisos = p_permisos WHERE idEmpleado = p_idEmpleado;
+        UPDATE empleados SET nombre = p_nombre
+		   WHERE idEmpleado = p_idEmpleado;
     END IF;
 END;
+
+CALL p_insertarempleados(-1, 'Leonardo');
+SELECT * FROM empleados;
 
 DELIMITER $$
 DROP PROCEDURE if EXISTS p_eliminarempleados;
