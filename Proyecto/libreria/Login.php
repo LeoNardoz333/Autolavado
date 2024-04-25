@@ -26,6 +26,14 @@ class Login
         else
             return "El usuario ingresado no existe.";
     }
+
+    function extraerID($usuario)
+    {
+        $con = new mysqli(s, u, p, bd);
+        $con->set_charset("utf8");
+        $q = $con->stmt_init();
+        return $this->Consultas($q, "select fkidEmpleado from usuarios where usuario = ?",$usuario);
+    }
     
     function Consultas($q, $consulta, $parametro)
     {
