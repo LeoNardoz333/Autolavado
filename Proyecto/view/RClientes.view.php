@@ -17,14 +17,27 @@
             Auto <input type="text" name="txtAuto" placeholder="Auto" class="form-control">
 
             <div class="input-group mb-3">
-  <label class="input-group-text" for="inputGroupSelect01">Tipo de vehiculo</label>
-  <select class="form-select" id="inputGroupSelect01">
+  <label class="mt-3" for="inputGroupSelect01">Tipo de vehiculo</label>
+  <select class="form-select" id="inputGroupSelect01" name="tipoVehiculo">
     <option selected>Selecciona...</option>
     <?php
-    if ($result->num_rows > 0) {
-      while($row = $result->fetch_assoc()) {
-        echo "<option value='" . $row["idTipoAuto"] . "'>" . $row["clasificacion"] . "</option>";
-      }
+    require('config.php');
+    $con = new mysqli(s, u, p, bd);
+    $con->set_charset("utf8");
+    $q = $con->stmt_init();
+    $q->prepare("select t.idTipoAuto, t.clasificacion from tipoAuto t");
+    $q->execute();
+    $result = array();
+    $res = $q->get_result();
+    while ($row = $res->fetch_assoc()) {
+        $result[] = $row;
+    }
+    $q->close();
+    $con->close();
+    if (!empty($result)) {
+        foreach ($result as $row) {
+            echo '<option value="' . $row["idTipoAuto"] . '">' . $row["clasificacion"] . "</option>";
+        }
     }
     ?>
   </select>
@@ -40,7 +53,7 @@
 </div> -->
             Cantidad <input type="text" name="txtCaracteristica" placeholder="Caracteristica" class="form-control"> 
             Turno <input type="text" name="txtTurno" placeholder="Turno" class="form-control" readonly>
-            <button class="btn btn-primary">
+            <button type="submit" class="btn btn-primary">
                 Guardar
             </button>
         </form>

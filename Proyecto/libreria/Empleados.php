@@ -67,7 +67,6 @@
                 <script>
                     $(".editar").click(function(){
                         let _ide = $(this).attr("_ide");
-                        alert("Yeii" + _ide);
                         $.post("modificarempleado",{ide:_ide}, function(mensaje){
                             $("#x").html(mensaje);
                         });
@@ -91,7 +90,7 @@
             $con = new mysqli(s,u,p,bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $q->prepare("select * from empleados where id=?");
+            $q->prepare("select * from empleados where idEmpleado=?");
             $q->bind_param('s', $id);
             $q->execute();
             $q->bind_result($id,$nombre);
