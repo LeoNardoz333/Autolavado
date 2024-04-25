@@ -4,7 +4,6 @@
     require 'libreria/IFunciones.php';
     require 'libreria/IPagos.php';
     require 'libreria/IVentas.php';
-    require 'libreria/GenerarPDF.php';
     class Factory
     {
         static function Mostrar($tipo, $filtro)
@@ -71,16 +70,16 @@
                         return $funcion->Insertar($datos);
                         break;
                     }
-                case 'Pagos': 
+                /*case 'Pagos': 
                     {
-                        $funcion = new Pagos(); 
-                        return $funcion->Insertar($datos);
+                        $funcion = new Empleados(); 
+                        return $funcion->calcularCobro($datos);
                         break;
-                    }
+                    }*/
                 case 'Ventas': 
                     {
-                        $funcion = new Ventas(); 
-                        return $funcion->Insertar($datos);
+                        $funcion = new Empleados(); 
+                        return $funcion->calcularCobro($datos);
                         break;
                     }
                 case 'Ventas Totales': 

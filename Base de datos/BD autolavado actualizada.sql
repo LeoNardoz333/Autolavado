@@ -127,19 +127,12 @@ CREATE PROCEDURE p_insertarclientes(
     IN p_turno INT
 )
 BEGIN
-    DECLARE x INT;
-    SELECT COUNT(*) FROM clientes WHERE nombre = p_nombre INTO x;
-    IF x = 0 THEN
-        IF p_idClientes < 1 THEN
-            INSERT INTO clientes VALUES (null, p_nombre, p_auto, p_fkidTipoAuto, p_turno); 
-        ELSE
-            UPDATE clientes SET nombre = p_nombre, auto = p_auto, fkidTipoAuto = p_fkidTipoAuto, turno = p_turno 
+   IF p_idClientes < 1 THEN
+      INSERT INTO clientes VALUES (null, p_nombre, p_auto, p_fkidTipoAuto, p_turno); 
+   ELSE
+      UPDATE clientes SET nombre = p_nombre, auto = p_auto, fkidTipoAuto = p_fkidTipoAuto, turno = p_turno 
 				WHERE idClientes = p_idClientes;
-        END IF;
-    ELSE
-        UPDATE clientes SET nombre = p_nombre, auto = p_auto, fkidTipoAuto = p_fkidTipoAuto, turno = p_turno 
-		  WHERE idClientes = p_idClientes;
-    END IF;
+	END IF;
 END;
 
 #CALL p_insertarclientes(-1,'prueba cliente',1,5);
@@ -308,3 +301,4 @@ SELECT c.idClientes, c.nombre, c.auto, t.clasificacion, c.turno from clientes c,
 	where c.fkidTipoAuto = t.idTipoAuto;
 	
 SELECT * FROM v_turno;
+SELECT * FROM v_clientes;

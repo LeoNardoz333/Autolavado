@@ -4,12 +4,12 @@
     {
         function Insertar(array $datos)
         {
-            $fecha = date('Y-m-d H:i:s', strtotime($datos['fecha']));
+            #$fecha = date('Y-m-d H:i:s', strtotime($datos['fecha']));
             $con = new mysqli(s, u, p, bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $q->prepare("INSERT INTO pagos VALUES (null, ?, ?, ?)");
-            $q->bind_param('sss', $datos['fkidEmpleado'], $datos['pago'], $fecha);
+            $q->prepare("INSERT INTO pagos VALUES (null, ?, ?, now())");
+            $q->bind_param('ss', $datos['fkidEmpleado'], $datos['pago']);
             $q->execute();
             $q->close();
         }

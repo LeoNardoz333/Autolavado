@@ -126,8 +126,8 @@
             $con = new mysqli(s, u, p, bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $valor = $this-> Consultas($q, "select valor from tipoAuto where clasificacion=?",
-                $datos['clasificacion']);
+            $valor = $this-> Consultas($q, "select valor from tipoAuto where idTipoAuto=?",
+                $datos['fkidTipoAuto']);
             $pago = $valor * doubleval($datos['cantidad']);
             $datos['pago'] = $pago;
             //Ventas

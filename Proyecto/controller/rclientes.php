@@ -1,6 +1,8 @@
 <?php
 require 'config.php';
 require 'libreria/Factory.php';
+require 'libreria/GenerarPDF.php';
+require 'libreria/Empleados.php';
 require 'libreria/Clientes.php';
 require 'libreria/Pagos.php';
 require 'libreria/Ventas.php';
@@ -17,17 +19,21 @@ else if(isset($_POST['ide']))
     $datos['idClientes'] = isset($_POST['ide']);
     $datos['nombre'] = $_POST['txtNombre'];
     $datos['auto'] = $_POST['txtAuto'];
-    $datos['fktipoAuto'] = $_POST['tipoVehiculo'];
+    $datos['fkidTipoAuto'] = $_POST['tipoVehiculo'];
     $datos['turno'] = $_POST['txtTurno'];
     $f->Modificar('Clientes',$datos);
 }
-if(isset($_POST['txtNombre'], $_POST['txtAuto'], $_POST['tipoVehiculo'],
+else if(isset($_POST['txtNombre'], $_POST['txtAuto'], $_POST['tipoVehiculo'],
 $_POST['txtCaracteristica'], $_POST['txtTurno']))
 {
+    $datos['cantidad'] = $_POST['txtCaracteristica'];
+    $datos['fecha'] = 'NOW()';
     $datos['nombre'] = $_POST['txtNombre'];
     $datos['auto'] = $_POST['txtAuto'];
-    $datos['fktipoAuto'] = $_POST['tipoVehiculo'];
+    $datos['fkidTipoAuto'] = $_POST['tipoVehiculo'];
     $datos['turno'] = $_POST['txtTurno'];
+    $datos['fkidEmpleado'] = $_SESSION['idUsuario'];
+    $f->Insertar('Ventas',$datos);
     $f->Insertar('Clientes',$datos);
 }
 $p['resultado'] = $f->Mostrar('Clientes', '');

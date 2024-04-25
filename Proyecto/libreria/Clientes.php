@@ -22,7 +22,7 @@
             $con->set_charset("utf8");
             $q = $con->stmt_init();
             $q->prepare("call p_insertarclientes(-1, ?, ?, ?, ?)");
-            $q->bind_param('ssss', $datos['nombre'], $datos['auto'], $datos['fktipoAuto'], $datos['turno']);
+            $q->bind_param('ssss', $datos['nombre'], $datos['auto'], $datos['fkidTipoAuto'], $datos['turno']);
             $q->execute();
             $q->close();
         }
@@ -81,7 +81,7 @@
             $q = $con->stmt_init();
             $q->prepare("call p_insertarclientes(?, ?, ?, ?, ?)");
             $q->bind_param('sssss', $datos['idClientes'], $datos['nombre'], 
-            $datos['auto'], $datos['fktipoAuto'], $datos['turno']);
+            $datos['auto'], $datos['fkidTipoAuto'], $datos['turno']);
             $q->execute();
             $q->close();
         }
