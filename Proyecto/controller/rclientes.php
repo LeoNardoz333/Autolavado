@@ -27,14 +27,16 @@ else if(isset($_POST['txtNombre'], $_POST['txtAuto'], $_POST['tipoVehiculo'],
 $_POST['txtCaracteristica'], $_POST['txtTurno']))
 {
     $datos['cantidad'] = $_POST['txtCaracteristica'];
-    $datos['fecha'] = 'NOW()';
+    $datos['fecha'] = date('Y-m-d');
     $datos['nombre'] = $_POST['txtNombre'];
     $datos['auto'] = $_POST['txtAuto'];
     $datos['fkidTipoAuto'] = $_POST['tipoVehiculo'];
     $datos['turno'] = $_POST['txtTurno'];
     $datos['fkidEmpleado'] = $_SESSION['idUsuario'];
-    $f->Insertar('Ventas',$datos);
-    $f->Insertar('Clientes',$datos);
+    #$p['fecha'] = "update pagos set fkidEmpleado=".$datos['fkidEmpleado'].", cantidad=".
+    #$datos['cantidad'].", fecha=".$datos['fecha']." where id=";
+    #$f->Insertar('Clientes',$datos);
+    #$f->Insertar('Ventas',$datos);
 }
 $p['resultado'] = $f->Mostrar('Clientes', '');
 View('menu',$p);

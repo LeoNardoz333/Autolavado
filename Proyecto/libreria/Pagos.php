@@ -51,8 +51,8 @@
             $con = new mysqli(s, u, p, bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $q->prepare("update pagos set idEmpleado=?, cantidad=?, fecha=? where id=?");
-            $q->bind_param('ssss', $datos['idEmpleado'], $datos['pago'], $datos['fecha'], $datos['id']);
+            $q->prepare("update pagos set fkidEmpleado=?, cantidad=?, fecha=? where id=?");
+            $q->bind_param('ssss', $datos['fkidEmpleado'], $datos['pago'], $datos['fecha'], $datos['id']);
             $q->execute();
             $q->close();
         }

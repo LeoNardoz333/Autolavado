@@ -67,7 +67,9 @@
         </form>
     </div>
     <div class="col-6">
-        <?php echo $resultado; ?>
+        <?php echo $resultado; 
+        #echo "\n $fecha;"
+        ?>
     </div>
 </div>
 </body>

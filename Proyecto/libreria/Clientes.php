@@ -92,7 +92,7 @@
             $q = $con->stmt_init();
             $q->prepare("SELECT c.idClientes, t.idTipoAuto, c.nombre, c.auto, t.clasificacion, c.turno, p.cantidad".
             " from clientes c, tipoauto t, pagos p "." 
-            where c.fkidTipoAuto = t.idTipoAuto and t.idTipoAuto = ?");
+            where c.fkidTipoAuto = t.idTipoAuto and c.idClientes = ?");
             $q->bind_param('s', $id);
             $q->execute();
             $q->bind_result($id,$idTipoAuto, $nombre, $auto, $clasificicacion, $turno, $cantidad);

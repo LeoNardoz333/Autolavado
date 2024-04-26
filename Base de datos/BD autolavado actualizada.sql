@@ -33,7 +33,7 @@ create table pagos(
 id int primary key auto_increment,
 fkidEmpleado int,
 cantidad double,
-fecha datetime,
+fecha date,
 foreign key(fkidEmpleado) references empleados(idEmpleado));
 
 #Aquí ya se especificaría la cantidad, y ya con un trigger insertamos el valor en 
@@ -44,7 +44,7 @@ id int primary key auto_increment,
 fkidEmpleado int,
 fkidTipoAuto int,
 cantidad double, #cantidad de la unidad de medida
-fecha datetime,
+fecha date,
 foreign key(fkidEmpleado) references empleados(idEmpleado),
 foreign key(fkidTipoAuto) references tipoauto(idTipoAuto));
 
@@ -53,7 +53,7 @@ create table ventasTotales(
 id int primary key auto_increment,
 fkidEmpleado int,
 noClientes int,
-fecha datetime,
+fecha date,
 foreign key(fkidEmpleado) references empleados(idEmpleado));
 
 DROP TABLE if EXISTS clientes;
@@ -158,14 +158,6 @@ BEGIN
 END;*/
 
 #Procedimientos tipoAuto
-DROP TABLE if EXISTS tipoAuto;
-CREATE TABLE tipoAuto(
-idTipoAuto INT AUTO_INCREMENT PRIMARY KEY,
-auto varchar(50),
-clasificacion VARCHAR(50),
-unidad varchar(50), #medida en la que se evalua: piezas, puertas, etc..
-valor DOUBLE); #valor por unidad de medida 
-
 DELIMITER $$
 DROP PROCEDURE if EXISTS p_insertartipoauto;
 CREATE PROCEDURE p_insertartipoauto(

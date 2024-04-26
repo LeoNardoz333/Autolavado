@@ -39,6 +39,7 @@ if(isset($_POST['ide']))
         </div>
         Cantidad <input type="text" name="txtCaracteristica" placeholder="Caracteristica" class="form-control" value="'.$dc[6].'">
         Turno <input type="text" name="txtTurno" placeholder="Turno" class="form-control" value="'.$dc[5].'" readonly>
+        <input type="hidden" name="ide" value="'.$dc[0].'">
         <button type="submit" class="btn btn-primary">
             Actualizar
         </button>

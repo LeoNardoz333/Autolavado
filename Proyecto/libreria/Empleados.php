@@ -123,21 +123,25 @@
         function calcularCobro(array $datos)
         {
             $valor=0.0;
+            $cantidadActual=0.0;
             $con = new mysqli(s, u, p, bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
             $valor = $this-> Consultas($q, "select valor from tipoAuto where idTipoAuto=?",
                 $datos['fkidTipoAuto']);
-            $pago = $valor * doubleval($datos['cantidad']);
+            $pago = $valor * floatval($datos['cantidad']);
             $datos['pago'] = $pago;
             //Ventas
             $this->ventas->Insertar($datos);
             //Pagos
-            $cantidadActual=$this-> Consultas($q, "select count(*) from pagos where fecha=?",
+            $id=$this-> Consultas($q, "select id from pagos where fecha=?",
             $datos['fecha']);
-            if($cantidadActual != 0)
+            if($id > 0)
             {
-                $datos['pago'] += $cantidadActual;
+                $cantidadActual=$this-> Consultas($q, "select cantidad from pagos where fecha=?",
+                $datos['fecha']);
+                $datos['pago'] = floatval($pago) + floatval($cantidadActual);
+                $datos['id'] = $id;
                 $this->pagos->Modificar($datos);
             }
             else
