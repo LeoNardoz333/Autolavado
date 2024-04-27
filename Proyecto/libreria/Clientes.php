@@ -90,15 +90,15 @@
             $con = new mysqli(s,u,p,bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $q->prepare("SELECT c.idClientes, t.idTipoAuto, c.nombre, c.auto, t.clasificacion, c.turno, p.cantidad".
-            " from clientes c, tipoauto t, pagos p "." 
-            where c.fkidTipoAuto = t.idTipoAuto and c.idClientes = ?");
+            $q->prepare("SELECT c.idClientes, t.idTipoAuto, c.nombre, c.auto, t.clasificacion, c.turno, v.cantidad".
+            ", v.fecha from clientes c, tipoauto t, ventas v "." 
+            where c.fkidTipoAuto = t.idTipoAuto and c.idClientes = v.fkidCliente and c.idClientes = ?");
             $q->bind_param('s', $id);
             $q->execute();
-            $q->bind_result($id,$idTipoAuto, $nombre, $auto, $clasificicacion, $turno, $cantidad);
+            $q->bind_result($id,$idTipoAuto, $nombre, $auto, $clasificicacion, $turno, $cantidad, $fecha);
             $q->fetch();
             $q->close();
-            return array($id,$idTipoAuto,$nombre, $auto, $clasificicacion, $turno, $cantidad);
+            return array($id,$idTipoAuto,$nombre, $auto, $clasificicacion, $turno, $cantidad, $fecha);
         }
         function Borrar($id)
         {

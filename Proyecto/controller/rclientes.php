@@ -14,17 +14,22 @@ if(isset($_POST['_id']))
 {
     $f->Borrar('Clientes', $_POST['_id']);
 }
-else if(isset($_POST['ide']))
+else if(isset($_POST['ide'], $_POST['txtNombre'], $_POST['txtAuto'], $_POST['tipoVehiculo'],
+    $_POST['txtCaracteristica'], $_POST['txtTurno']))
 {
-    $datos['idClientes'] = isset($_POST['ide']);
+    $datos['fecha'] = $_POST['fechaowo'];
+    $datos['idClientes'] = $_POST['ide'];
+    $datos['cantidad'] = $_POST['txtCaracteristica'];
     $datos['nombre'] = $_POST['txtNombre'];
     $datos['auto'] = $_POST['txtAuto'];
     $datos['fkidTipoAuto'] = $_POST['tipoVehiculo'];
     $datos['turno'] = $_POST['txtTurno'];
+    $datos['fkidEmpleado'] = $_SESSION['idUsuario'];
     $f->Modificar('Clientes',$datos);
+    $f->Modificar('Ventas',$datos);
 }
 else if(isset($_POST['txtNombre'], $_POST['txtAuto'], $_POST['tipoVehiculo'],
-$_POST['txtCaracteristica'], $_POST['txtTurno']))
+    $_POST['txtCaracteristica'], $_POST['txtTurno']))
 {
     $datos['cantidad'] = $_POST['txtCaracteristica'];
     $datos['fecha'] = date('Y-m-d');
@@ -35,8 +40,8 @@ $_POST['txtCaracteristica'], $_POST['txtTurno']))
     $datos['fkidEmpleado'] = $_SESSION['idUsuario'];
     #$p['fecha'] = "update pagos set fkidEmpleado=".$datos['fkidEmpleado'].", cantidad=".
     #$datos['cantidad'].", fecha=".$datos['fecha']." where id=";
-    #$f->Insertar('Clientes',$datos);
-    #$f->Insertar('Ventas',$datos);
+    $f->Insertar('Clientes',$datos);
+    $f->Insertar('Ventas',$datos);
 }
 $p['resultado'] = $f->Mostrar('Clientes', '');
 View('menu',$p);

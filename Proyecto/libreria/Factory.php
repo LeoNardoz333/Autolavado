@@ -112,12 +112,12 @@
                         return $funcion->Modificar($datos);
                         break;
                     }
-                case 'Pagos': 
+                /*case 'Pagos': 
                     {
                         $funcion = new Pagos(); 
                         return $funcion->Modificar($datos);
                         break;
-                    }
+                    }*/
                 case 'Ventas': 
                     {
                         $funcion = new Ventas(); 
