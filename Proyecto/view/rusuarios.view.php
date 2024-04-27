@@ -12,7 +12,7 @@
 </div>
 <div class="row">
     <div class="col-6" id="x">
-        <form method="post" action="home">
+        <form method="post" action="rusuarios">
 						
 						<div class="form-group">
 							<label for="name" class="cols-sm-2 control-label">Empleado</label>
@@ -43,7 +43,7 @@
 								</div>
 							</div>
 						</div>
-                        
+                        <?php /*
 						<div class="form-group">
 							<label for="permisos" class="cols-sm-2 control-label">Permisos</label>
 							<div class="cols-sm-10">
@@ -52,15 +52,16 @@
 									<input type="text" class="form-control" name="permisos" id="permisos"  placeholder="Enter your Email"/>
 								</div>
 							</div>
-						</div>
+						</div> */
+						?>
 
 						<div class="form-group ">
-							<button type="button" class="btn btn-primary btn-lg mt-3">Register</button>
+							<button type="submit" class="btn btn-primary btn-lg mt-3">Registrar</button>
 						</div>
         </form>
     </div>
     <div class="col-6">
-        <!-- <?php echo $resultado; ?> -->
+        <?php #echo $resultado; ?>
     </div>
 </div>
 </body>

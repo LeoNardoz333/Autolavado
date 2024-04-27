@@ -40,6 +40,12 @@
                         return $funcion->Consultar($filtro);
                         break;
                     }
+                case 'Usuarios': 
+                    {
+                        $funcion = new Usuarios(); 
+                        return $funcion->Consultar($filtro);
+                        break;
+                    }
                 case 'Ventas Totales': 
                     {
                         $funcion = new VentasTotales(); 
@@ -82,6 +88,12 @@
                         return $funcion->calcularCobro($datos);
                         break;
                     }
+                case 'Usuarios': 
+                    {
+                        $funcion = new Usuarios(); 
+                        return $funcion->Insertar($datos);
+                        break;
+                    }
                 case 'Ventas Totales': 
                     {
                         $funcion = new VentasTotales(); 
@@ -121,6 +133,12 @@
                 case 'Ventas': 
                     {
                         $funcion = new Ventas(); 
+                        return $funcion->Modificar($datos);
+                        break;
+                    }
+                case 'Usuarios': 
+                    {
+                        $funcion = new Usuarios(); 
                         return $funcion->Modificar($datos);
                         break;
                     }
@@ -166,6 +184,12 @@
                         return $funcion->ConsultaID($id);
                         break;
                     }
+                case 'Usuarios': 
+                    {
+                        $funcion = new Usuarios(); 
+                        return $funcion->ConsultaID($id);
+                        break;
+                    }
                 case 'Ventas Totales': 
                     {
                         $funcion = new VentasTotales(); 
@@ -205,6 +229,12 @@
                 case 'Ventas': 
                     {
                         $funcion = new Ventas(); 
+                        return $funcion->Borrar($id);
+                        break;
+                    }
+                case 'Usuarios': 
+                    {
+                        $funcion = new Usuarios(); 
                         return $funcion->Borrar($id);
                         break;
                     }
