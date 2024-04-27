@@ -44,7 +44,7 @@
                 $q->bind_result($id, $nombret);
     
                 $rs = '<table class="table table-bordered table-striped"><thead><tr><th>ID</th><th>'.
-                'Nombre</th>'.
+                'Nombre</th><th>Eliminar</th><th>Editar</th>'.
                 '</tr></thead><tbody>';
     
                 while ($q->fetch()) {

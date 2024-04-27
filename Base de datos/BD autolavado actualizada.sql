@@ -318,8 +318,9 @@ ORDER BY idClientes DESC
 LIMIT 1;
 
 CREATE VIEW v_clientes as
-SELECT c.idClientes, c.nombre, c.auto, t.clasificacion, c.turno from clientes c, tipoauto t
-	where c.fkidTipoAuto = t.idTipoAuto;
+SELECT c.idClientes, c.nombre, c.auto, t.clasificacion, c.turno, v.fkidEmpleado, e.nombre 
+    from clientes c, tipoauto t, empleados e, ventas v
+	where c.fkidTipoAuto = t.idTipoAuto and v.fkidEmpleado = e.idEmpleado and v.fkidCliente = c.idClientes;
 	
 SELECT * FROM v_turno;
 SELECT * FROM v_clientes;

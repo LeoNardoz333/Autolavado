@@ -33,6 +33,8 @@
             $auto='';
             $tipoAuto='';
             $turno=0;
+            $idEmpleado=0;
+            $nombreEmpleado='';
             $con = new mysqli(s,u,p,bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
@@ -40,10 +42,13 @@
             $nombre='%'.$nombre.'%';
             $q->bind_param('s', $nombre);
             $q->execute();
-            $q->bind_result($id, $nombret, $auto, $tipoAuto,$turno);
+            $q->bind_result($id, $nombret, $auto, $tipoAuto,$turno, $idEmpleado, $nombreEmpleado);
 
             $rs = '<table class="table table-bordered table-striped"><thead><tr><th>ID</th><th>'.
-            'Nombre</th><th>Auto</th><th>Tipo de auto</th><th>Turno</th></tr></thead><tbody>';
+            'Nombre</th><th>Auto</th><th>Tipo de auto</th><th>Turno</th><th>Registrado por</th>';
+            if($_SESSION['permisos'] != 'admin')
+                $rs .= '<th>Eliminar</th><th>Editar</th>';
+            $rs .= '</tr></thead><tbody>';
 
             while ($q->fetch()) {
                 $rs .= "<tr>
@@ -51,16 +56,24 @@
                 <td>$nombret</td>
                 <td>$auto</td>
                 <td>$tipoAuto</td>
-                <td>$turno</td>".'
-                <td><form method="post" action="rclientes">
-                        <button> Eliminar </button>
-                        <input type="hidden" name="_id" value="'.$id.'">
-                    </form>
-                </td>
-                <td>
-                    <button class="editar" _ide="'.$id.'"> Editar </button>
-                </td>
-                </tr>';
+                <td>$turno</td>
+                <td>$nombreEmpleado</td>";
+                if($_SESSION['permisos'] != 'admin' && $_SESSION['idUsuario'] == $idEmpleado)
+                {
+                    $rs .= '<td><form method="post" action="rclientes">
+                            <button> Eliminar </button>
+                            <input type="hidden" name="_id" value="'.$id.'">
+                        </form>
+                    </td>
+                    <td>
+                        <button class="editar" _ide="'.$id.'"> Editar </button>
+                    </td>';
+                }
+                else if($_SESSION['permisos'] != 'admin')
+                {
+                    $rs .= '<td> </td><td>  </td>';
+                }
+                $rs .= '</tr>';
             }
 
             $q->close();
