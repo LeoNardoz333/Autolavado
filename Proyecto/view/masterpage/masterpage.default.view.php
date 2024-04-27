@@ -6,7 +6,7 @@
   <link rel="stylesheet" type="text/css" href="dist/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="css/propio.css">
 </head>
-<body class="fondo4">
+<body>
   <div id="contenido">
     <?php echo $view_content; ?>
   </div>
