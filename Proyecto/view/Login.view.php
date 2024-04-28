@@ -18,7 +18,7 @@
         <input type="text" id="login" class="fadeIn second" name="login" placeholder="Usuario">
         <input type="text" id="password" class="fadeIn third" name="password" placeholder="Contraseña">
         <button type="submit" class="btn btn-primary mt-2 mb-2">Iniciar Sesion</button>
-        <button type="button" class="btn btn-info mt-2 mb-2">Registrarse</button>
+        <a href="rusuarios" ><button type="button" class="btn btn-info mt-2 mb-2">Registrarse</button></a>
       </form>
       <div id="formFooter">
         <div id="liveAlertPlaceholder"></div>
@@ -29,6 +29,6 @@
   </div>
     <div>
       <?php
-      echo $usuario;
+      #echo $usuario;
       ?>
     </div>

@@ -6,20 +6,20 @@
 </style>
 <body class="fondoAdm">
 <div class="row">
-    <div class="col-6">
-        <form method="post" action="home">
-            Empleado <input type="text" name="txtEmpleado" placeholder="Nombre Empleado" class="form-control"> 
-            Usuario <input type="text" name="txtUser" placeholder="Nombre de Usuario" class="form-control">
-            Contraseña <input type="number" name="txtPass" placeholder="Contraseña" class="form-control">
+    <div class="col-6" id="x">
+        <form method="post" action="rusuarios">
+            Empleado <input type="text" name="name" placeholder="Nombre Empleado" class="form-control"> 
+            Usuario <input type="text" name="username" placeholder="Nombre de Usuario" class="form-control">
+            Contraseña <input type="number" name="pass" placeholder="Contraseña" class="form-control">
 <div class="mt-1">
-  <label>Tipo de vehiculo</label>
-  <select class="form-select">
+  <label>Permisos</label>
+  <select class="form-select" name ="permisos">
     <option selected>Selecciona...</option>
     <option value="admin">Administrador</option>
     <option value="usuario">Usuario</option>
   </select>
 </div>
-            <button class="btn btnAdm mt-3">
+            <button type="submit" class="btn btnAdm mt-3">
                 Guardar
             </button>
         </form>

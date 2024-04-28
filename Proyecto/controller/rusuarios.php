@@ -11,7 +11,6 @@ $f = new Factory();
 $usuarios = new Usuarios();
 $p = array();
 $datos = array();
-/*
 if(isset($_POST['_id']))
 {
     $f->Borrar('Usuarios',$_POST['_id']);
@@ -28,13 +27,15 @@ else if(isset($_POST['ide'],$_POST['name'],$_POST['username'],$_POST['pass'],$_P
     $f->Modificar('Usuarios',$datos);
     $f->Modificar('Empleados',$datos);
 }
-*/
 if(isset($_POST['name'],$_POST['username'],$_POST['pass']))
 {
     $existe = $usuarios->getUsuario($_POST['name']);
     $datos['usuario'] = $_POST['username'];
     $datos['contrasena'] = $_POST['pass'];
-    $datos['permisos'] = 'usuario';
+    if(isset($_POST['permisos']))
+        $datos['permisos'] = $_POST['permisos'];
+    else
+        $datos['permisos'] = 'usuario';
     $datos['nombre'] = $_POST['name'];
     $f->Insertar('Empleados',$datos);
     if($existe == 0)
@@ -43,6 +44,11 @@ if(isset($_POST['name'],$_POST['username'],$_POST['pass']))
         $f->Insertar('Usuarios',$datos);
     }
 }
-$f->Mostrar('Usuarios','');
+$p['resultado'] = $f->Mostrar('Usuarios','');
 View('menu',$p);
-View('rusuarios',$p);
+if($_SESSION['permisos'] == 'admin')
+    View('gusuarios',$p);
+else if($_SESSION['permisos'] == 'usuario')
+    View('login',$p);
+else
+    View('rusuarios',$p);
