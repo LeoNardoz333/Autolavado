@@ -23,8 +23,7 @@
             $con = new mysqli(s,u,p,bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $q->prepare("SELECT pagos.id, empleados.id, empleados.nombre, pagos.cantidad, pagos.fecha".
-            " FROM pagos, empleados WHERE empleados.nombre LIKE ? and pagos.fkidEmpleado=empleados.idEmpleado");
+            $q->prepare("SELECT * from v_pagosDiarios where nombre like ? order by fecha desc");
             $nombre='%'.$nombre.'%';
             $q->bind_param('s', $nombre);
             $q->execute();
@@ -37,7 +36,7 @@
                 $rs .= "<tr>
                 <td>$id</td>
                 <td>$idEmpleado</td>
-                <td>$nombre</td>
+                <td>$nombreEmp</td>
                 <td>$cantidad</td>
                 <td>$fecha</td>
                 </tr>";

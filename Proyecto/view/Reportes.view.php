@@ -13,13 +13,23 @@
 				<div class="header-left">
 							<img src="images/alavado.png">
 				</div>
-					<div class="col-md-4">
+					<div class="col-6">
 						<div class="menu">
-							<button class="btn btn-primary mt-3">Reporte Pagos</button>
-							<button class="btn btn-primary mt-3">Reporte Servicios</button>
-							<button class="btn btn-primary mt-3">Reporte Empleados</button>
+							<form method="post" action="reportes">
+    							<button type="submit" name="reporte" value="pagos" 
+								class="btn btn-primary mt-3">Reporte Pagos</button>
+
+    							<button type="submit" name="reporte" value="servicios" 
+								class="btn btn-primary mt-3">Reporte Servicios</button>
+
+    							<button type="submit" name="reporte" value="empleados" 
+								class="btn btn-primary mt-3">Reporte Empleados del día</button>
+							</form>
 						</div>
 						<button class="btn btn-success mt-3">Imprimir</button>
+					</div>
+					<div class="col-6">
+  						<?php echo $resultado; ?>
 					</div>
 				</div>
 			</div>
