@@ -35,6 +35,7 @@
             $turno=0;
             $idEmpleado=0;
             $nombreEmpleado='';
+            $fecha='';
             $con = new mysqli(s,u,p,bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
@@ -42,10 +43,10 @@
             $nombre='%'.$nombre.'%';
             $q->bind_param('s', $nombre);
             $q->execute();
-            $q->bind_result($id, $nombret, $auto, $tipoAuto,$turno, $idEmpleado, $nombreEmpleado);
+            $q->bind_result($id, $nombret, $auto, $tipoAuto,$turno, $idEmpleado, $nombreEmpleado, $fecha);
 
             $rs = '<table class="table table-bordered table-striped"><thead><tr><th>ID</th><th>'.
-            'Nombre</th><th>Auto</th><th>Tipo de auto</th><th>Turno</th><th>Registrado por</th>';
+            'Nombre</th><th>Auto</th><th>Tipo de auto</th><th>Turno</th><th>Registrado por</th><th>Fecha</th>';
             if($_SESSION['permisos'] != 'admin')
                 $rs .= '<th>Eliminar</th><th>Editar</th>';
             $rs .= '</tr></thead><tbody>';
@@ -57,7 +58,8 @@
                 <td>$auto</td>
                 <td>$tipoAuto</td>
                 <td>$turno</td>
-                <td>$nombreEmpleado</td>";
+                <td>$nombreEmpleado</td>
+                <td>$fecha</td>";
                 if($_SESSION['permisos'] != 'admin' && $_SESSION['idUsuario'] == $idEmpleado)
                 {
                     $rs .= '<td><form method="post" action="rclientes">
@@ -122,6 +124,17 @@
             $q->bind_param('s', $id);
             $q->execute();
             $q->close();
+        }
+        function getTurno($fecha)
+        {
+            $con = new mysqli(s, u, p, bd);
+            $con->set_charset("utf8");
+            $q = $con->stmt_init();
+            $q->prepare("select count(*) from clientes where fecha=?");
+            $q->bind_param('s', $existe);
+            $q->execute();
+            $q->close();
+            return $existe;
         }
     }
 ?>

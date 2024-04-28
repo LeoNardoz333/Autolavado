@@ -37,6 +37,7 @@
             echo '<option value="' . $row["idTipoAuto"] . '">' . $row["clasificacion"] . "</option>";
         }
     }
+    $q->close();
     ?>
   </select>
 </div>
@@ -52,14 +53,18 @@
             Cantidad <input type="text" name="txtCaracteristica" placeholder="Caracteristica" class="form-control">
             <?php 
             $turno = 0;
+            $fecha = date('Y-m-d');
             $w = $con->stmt_init();
-            $w->prepare("select * from v_turno");
+            $w->prepare("SELECT t.turno, t.idClientes from v_turno t, ventas v".
+            " WHERE fecha = ? AND v.fkidCliente = t.idClientes");
+            $w->bind_param('s', $fecha);
             $w->execute();
-            $w->bind_result($turno);
+            $w->bind_result($turno, $idowo);
             $w->fetch();
             echo
             'Turno <input type="text" name="txtTurno" placeholder="Turno" class="form-control"'.
             'value="'.($turno + 1).'" readonly>';
+            $w->close();
             ?>
             <button type="submit" class="btn btn-primary">
                 Guardar

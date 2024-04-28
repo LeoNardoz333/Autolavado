@@ -312,13 +312,14 @@ SELECT v.id, e.idEmpleado, e.nombre, a.clasificacion, v.cantidad, v.fecha FROM v
 WHERE v.fkidEmpleado = e.idEmpleado AND v.fkidTipoAuto = a.idTipoAuto;
 
 CREATE VIEW v_turno AS
-SELECT turno
+SELECT turno, idClientes
 FROM clientes
 ORDER BY idClientes DESC
 LIMIT 1;
 
+DROP VIEW if EXISTS v_clientes;
 CREATE VIEW v_clientes as
-SELECT c.idClientes, c.nombre, c.auto, t.clasificacion, c.turno, v.fkidEmpleado, e.nombre 
+SELECT c.idClientes, c.nombre, c.auto, t.clasificacion, c.turno, v.fkidEmpleado, e.nombre AS 'nombreE', v.fecha 
     from clientes c, tipoauto t, empleados e, ventas v
 	where c.fkidTipoAuto = t.idTipoAuto and v.fkidEmpleado = e.idEmpleado and v.fkidCliente = c.idClientes;
 	
