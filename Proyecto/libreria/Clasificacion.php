@@ -7,7 +7,7 @@
             $con = new mysqli(s, u, p, bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $q->prepare("p_insertartipoauto(-1, ?, ?, ?)");
+            $q->prepare("call p_insertartipoauto(-1, ?, ?, ?)");
             $q->bind_param('sss',$datos['clasificacion'], $datos['unidad'], $datos['valor']);
             $q->execute();
             $q->close();
@@ -37,25 +37,51 @@
                 <td>$clasificacion</td>
                 <td>$unidad</td>
                 <td>$valor</td>
-                </tr>";
+                <td>".'
+                    <form method="post" action="rvehiculos">
+                        <button>Eliminar</button>
+                        <input type="hidden" value="'.$id.'" name="_id">
+                    </form>
+                </td>
+                <td><button class="editar" _ide="'.$id.'">Editar</button></td>
+                </tr>';
             }
 
             $q->close();
-            return $rs.'</tbody></table>';
+            return $rs.'</tbody></table>
+            <script>
+                $(".editar").click(function()
+                {
+                    let _ide = $(this).attr("_ide");
+                    $.post("modificarvehiculos",{ide:_ide}, function(mensaje)
+                    {
+                        $("#x").html(mensaje);
+                    });
+                });
+            </script>';
         }
         function Modificar(array $datos)
         {
             $con = new mysqli(s, u, p, bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $q->prepare("p_insertartipoauto(?, ?, ?, ?)");
+            $q->prepare("call p_insertartipoauto(?, ?, ?, ?)");
             $q->bind_param('ssss', $datos['idTipoAuto'], $datos['clasificacion'], $datos['unidad'], $datos['valor']);
             $q->execute();
             $q->close();
         }
         function ConsultaID($id)
         {
-            
+            $con = new mysqli(s, u, p, bd);
+            $con->set_charset("utf8");
+            $q = $con->stmt_init();
+            $q->prepare("select * from tipoauto where idTipoAuto = ?");
+            $q->bind_param('s', $id);
+            $q->execute();
+            $q->bind_result($id, $clasificacion, $unidad, $valor);
+            $q->fetch();
+            $q->close();
+            return array($id, $clasificacion, $unidad, $valor);
         }
         function Borrar($id)
         {

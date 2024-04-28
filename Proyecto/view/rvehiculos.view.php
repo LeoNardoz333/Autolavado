@@ -6,12 +6,12 @@
 </style>
 <body class="fondoAdm">
 <div class="row">
-    <div class="col-6">
-        <form method="post" action="home">
+    <div class="col-6" id="x">
+        <form method="post" action="rvehiculos">
             Clasificacion <input type="text" name="txtClasificacion" placeholder="Tipo de vehiculo" class="form-control"> 
             Unidad <input type="text" name="txtUnidad" placeholder="Unidad en la cual se cobrara el vehiculo" class="form-control">
             Costo <input type="number" name="txtValor" placeholder="Costo de servicio por medida" class="form-control">
-            <button class="btn btnAdm mt-3">
+            <button type="submit" class="btn btnAdm mt-3">
                 Guardar
             </button>
         </form>
