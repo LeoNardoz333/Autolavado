@@ -7,6 +7,12 @@ require 'libreria/Empleados.php';
 require 'libreria/Pagos.php';
 require 'libreria/Ventas.php';
 session_start();
+if(!isset($_SESSION['usuario']))
+    $_SESSION['usuario']='';
+if(!isset($_SESSION['idUsuario']))
+    $_SESSION['idUsuario']='';
+if(!isset($_SESSION['permisos']))
+    $_SESSION['permisos']='';
 $f = new Factory();
 $usuarios = new Usuarios();
 $p = array();
