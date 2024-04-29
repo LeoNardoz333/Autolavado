@@ -307,6 +307,7 @@ CREATE VIEW v_clientesTotales AS
 SELECT v.id, e.idEmpleado, e.nombre, v.noClientes, v.fecha FROM ventasTotales v, empleados e
 WHERE v.fkidEmpleado = e.idEmpleado;
 
+
 CREATE VIEW v_clientesFecha AS
 SELECT v.id, e.idEmpleado, e.nombre, a.clasificacion, v.cantidad, v.fecha FROM ventas v, empleados e, tipoauto a
 WHERE v.fkidEmpleado = e.idEmpleado AND v.fkidTipoAuto = a.idTipoAuto;

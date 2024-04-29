@@ -46,7 +46,7 @@
                         return $funcion->Consultar($filtro);
                         break;
                     }
-                case 'Ventas Totales': 
+                case 'VentasTotales': 
                     {
                         $funcion = new VentasTotales(); 
                         return $funcion->Consultar($filtro);

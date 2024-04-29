@@ -26,7 +26,10 @@
 								class="btn btn-primary mt-3">Reporte Empleados del día</button>
 							</form>
 						</div>
-						<button class="btn btn-success mt-3">Imprimir</button>
+						 <form method="post" action="reportes">
+							<button type="submit" name="imprimir" value="1"
+							class="btn btn-success mt-3">Imprimir</button>
+						 </form>
 					</div>
 					<div class="col-6">
   						<?php echo $resultado; ?>

@@ -17,28 +17,28 @@
         function Consultar($nombre)
         {
             $id=0;
+            $idEmpleado='';
             $empleado='';
-            $tipoAuto='';
-            $cantidad=0;
+            $noClientes=0;
             $fecha='';
             $con = new mysqli(s,u,p,bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $q->prepare("SELECT * FROM v_ventas where nombre like ?");
+            $q->prepare("select * from v_clientesTotales where nombre like ?");
             $nombre='%'.$nombre.'%';
             $q->bind_param('s', $nombre);
             $q->execute();
-            $q->bind_result($id, $empleado, $tipoAuto, $cantidad, $fecha);
+            $q->bind_result($id, $idEmpleado, $empleado, $noClientes, $fecha);
 
             $rs = '<table class="table table-bordered table-striped"><thead><tr><th>ID</th><th>'.
-            'Empleado</th><th>Tipo de auto</th><th>Cantidad</th><th>Fecha</th></tr></thead><tbody>';
+            'ID del Empleado</th><th>Empleado</th><th>Número de clientes</th><th>Fecha</th></tr></thead><tbody>';
 
             while ($q->fetch()) {
                 $rs .= "<tr>
                 <td>$id</td>
+                <td>$idEmpleado</td>
                 <td>$empleado</td>
-                <td>$tipoAuto</td>
-                <td>$cantidad</td>
+                <td>$noClientes</td>
                 <td>$fecha</td>
                 </tr>";
             }
