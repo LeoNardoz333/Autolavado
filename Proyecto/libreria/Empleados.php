@@ -44,7 +44,7 @@
                 $q->bind_result($id, $nombret);
     
                 $rs = '<table class="table table-bordered table-striped"><thead><tr><th>ID</th><th>'.
-                'Nombre</th>'.
+                'Nombre</th><th>Eliminar</th><th>Editar</th>'.
                 '</tr></thead><tbody>';
     
                 while ($q->fetch()) {
@@ -67,9 +67,8 @@
                 <script>
                     $(".editar").click(function(){
                         let _ide = $(this).attr("_ide");
-                        alert("Yeii" + _ide);
-                        $.post("modificarEmpleado",{ide:_ide}, function(mensaje){
-                            $("#X").html(mensaje);
+                        $.post("modificarempleado",{ide:_ide}, function(mensaje){
+                            $("#x").html(mensaje);
                         });
                     });
                 </script>';
@@ -91,7 +90,7 @@
             $con = new mysqli(s,u,p,bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $q->prepare("select * from empleados where id=?");
+            $q->prepare("select * from empleados where idEmpleado=?");
             $q->bind_param('s', $id);
             $q->execute();
             $q->bind_result($id,$nombre);
@@ -124,21 +123,28 @@
         function calcularCobro(array $datos)
         {
             $valor=0.0;
+            $cantidadActual=0.0;
             $con = new mysqli(s, u, p, bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $valor = $this-> Consultas($q, "select valor from tipoAuto where clasificacion=?",
-                $datos['clasificacion']);
-            $pago = $valor * doubleval($datos['cantidad']);
+            $valor = $this-> Consultas($q, "select valor from tipoAuto where idTipoAuto=?",
+                $datos['fkidTipoAuto']);
+            $pago = $valor * floatval($datos['cantidad']);
             $datos['pago'] = $pago;
-            //Ventas
+            $datos['fkidCliente'] = $this->Consultas($q, "select idClientes from clientes where nombre=? order by idClientes desc",
+            $datos['nombre']);
+            //Ventas - Insersión desde trigger
             $this->ventas->Insertar($datos);
             //Pagos
-            $cantidadActual=$this-> Consultas($q, "select count(*) from pagos where fecha=?",
-            $datos['fecha']);
-            if($cantidadActual != 0)
+            $id=$this-> Consultas2Param($q, "select id from pagos where fecha=? and fkidEmpleado=?",
+            $datos['fecha'], $datos['fkidEmpleado']);
+            #$empleado=$this-> Consultas($q, "select count(*) from pagos where fkidEmpleado=?",$datos['fkidEmpleado']);
+            if($id > 0)
             {
-                $datos['pago'] += $cantidadActual;
+                $cantidadActual=$this-> Consultas2Param($q, "select cantidad from pagos where fecha=? and fkidEmpleado=?",
+                $datos['fecha'], $datos['fkidEmpleado']);
+                $datos['pago'] = floatval($pago) + floatval($cantidadActual);
+                $datos['id'] = $id;
                 $this->pagos->Modificar($datos);
             }
             else
@@ -163,6 +169,16 @@
             $resultado = '';
             $q->prepare($consulta);
             $q->bind_param('s', $parametro);
+            $q->execute();
+            $q->bind_result($resultado);
+            $q->fetch();
+            return $resultado;
+        }
+        function Consultas2Param($q, $consulta, $parametro, $parametro2)
+        {
+            $resultado = '';
+            $q->prepare($consulta);
+            $q->bind_param('ss', $parametro, $parametro2);
             $q->execute();
             $q->bind_result($resultado);
             $q->fetch();

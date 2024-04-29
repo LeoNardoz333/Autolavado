@@ -26,34 +26,14 @@ CREATE TABLE tipoAuto(
 idTipoAuto INT AUTO_INCREMENT PRIMARY KEY,
 clasificacion VARCHAR(50),
 unidad varchar(50), #medida en la que se evalua: piezas, puertas, etc..
-valor DOUBLE); #valor por unidad de medida 
+valor DOUBLE); #valor por unidad de medida
 
 DROP TABLE if EXISTS pagos;
 create table pagos(
 id int primary key auto_increment,
 fkidEmpleado int,
 cantidad double,
-fecha datetime,
-foreign key(fkidEmpleado) references empleados(idEmpleado));
-
-#Aquí ya se especificaría la cantidad, y ya con un trigger insertamos el valor en 
-#el pago dependiendo de la clasificación
-DROP TABLE if EXISTS ventas;
-create table ventas(
-id int primary key auto_increment,
-fkidEmpleado int,
-fkidTipoAuto int,
-cantidad double, #cantidad de la unidad de medida
-fecha datetime,
-foreign key(fkidEmpleado) references empleados(idEmpleado),
-foreign key(fkidTipoAuto) references tipoauto(idTipoAuto));
-
-DROP TABLE if EXISTS ventasTotales;
-create table ventasTotales(
-id int primary key auto_increment,
-fkidEmpleado int,
-noClientes int,
-fecha datetime,
+fecha date,
 foreign key(fkidEmpleado) references empleados(idEmpleado));
 
 DROP TABLE if EXISTS clientes;
@@ -65,11 +45,33 @@ fkidTipoAuto INT,
 turno INT,
 FOREIGN KEY(fkidTipoAuto) REFERENCES tipoauto (idTipoAuto));
 
+#Aquí ya se especificaría la cantidad, y ya con un trigger insertamos el valor en  la cantidad,
+#el pago dependiendo de la clasificación
+DROP TABLE if EXISTS ventas;
+create table ventas(
+id int primary key auto_increment,
+fkidEmpleado int,
+fkidTipoAuto INT,
+fkidCliente INT,
+cantidad double, #cantidad de la unidad de medidad
+fecha date,
+foreign key(fkidEmpleado) references empleados(idEmpleado),
+foreign key(fkidCliente) references Clientes(idClientes),
+foreign key(fkidTipoAuto) references tipoauto(idTipoAuto));
+
+DROP TABLE if EXISTS ventasTotales;
+create table ventasTotales(
+id int primary key auto_increment,
+fkidEmpleado int,
+noClientes int,
+fecha date,
+foreign key(fkidEmpleado) references empleados(idEmpleado));
+
 
 
 #PROCEDIMIENTOS
 
-#Procedimiento para empleados
+#Procedimiento para empleadosados
 
 DELIMITER $$
 DROP PROCEDURE if EXISTS p_insertarempleados;
@@ -82,7 +84,7 @@ BEGIN
     SELECT COUNT(*) FROM empleados WHERE nombre = p_nombre INTO x;
     IF x = 0 THEN
         IF p_idEmpleado < 1 THEN
-            INSERT INTO empleados VALUES (null, p_nombre); 
+            INSERT INTO empleados VALUES (null, p_nombre);
         ELSE
             UPDATE empleados SET nombre = p_nombre
 				 WHERE idEmpleado = p_idEmpleado;
@@ -91,10 +93,7 @@ BEGIN
         UPDATE empleados SET nombre = p_nombre
 		   WHERE idEmpleado = p_idEmpleado;
     END IF;
-END;
-
-CALL p_insertarempleados(-1, 'Leonardo');
-SELECT * FROM empleados;
+END;$$
 
 DELIMITER $$
 DROP PROCEDURE if EXISTS p_eliminarempleados;
@@ -112,35 +111,25 @@ in p_nombre VARCHAR(50)
 )
 BEGIN
 	select * from empleados where nombre like concat('%',p_nombre,'%');
-END;
-
-
-//Procedimiento para clientes
+END;$$
 
 DELIMITER $$
 DROP PROCEDURE if EXISTS p_insertarclientes;
 CREATE PROCEDURE p_insertarclientes(
     IN p_idClientes INT,
-    IN p_auto VARCHAR(50),
     IN p_nombre VARCHAR(50),
+    IN p_auto VARCHAR(50),
     IN p_fkidTipoAuto INT,
     IN p_turno INT
 )
 BEGIN
-    DECLARE x INT;
-    SELECT COUNT(*) FROM clientes WHERE nombre = p_nombre INTO x;
-    IF x = 0 THEN
-        IF p_idClientes < 1 THEN
-            INSERT INTO clientes VALUES (null, p_nombre, p_auto, p_fkidTipoAuto, p_turno); 
-        ELSE
-            UPDATE clientes SET nombre = p_nombre, auto = p_auto, fkidTipoAuto = p_fkidTipoAuto, turno = p_turno 
+   IF p_idClientes < 1 THEN
+      INSERT INTO clientes VALUES (null, p_nombre, p_auto, p_fkidTipoAuto, p_turno); 
+   ELSE
+      UPDATE clientes SET nombre = p_nombre, auto = p_auto, fkidTipoAuto = p_fkidTipoAuto, turno = p_turno
 				WHERE idClientes = p_idClientes;
-        END IF;
-    ELSE
-        UPDATE clientes SET nombre = p_nombre, auto = p_auto, fkidTipoAuto = p_fkidTipoAuto, turno = p_turno 
-		  WHERE idClientes = p_idClientes;
-    END IF;
-END;
+	END IF;
+END;$$
 
 #CALL p_insertarclientes(-1,'prueba cliente',1,5);
 #SELECT * FROM clientes;
@@ -152,27 +141,19 @@ in p_idClientes INT
 )
 BEGIN
 	delete from clientes where idClientes = p_idClientes;
-END;
+END;$$
 
-DELIMITER $$
-DROP PROCEDURE if EXISTS p_mostrarclientes;
-create procedure p_mostrarclientes(
-in p_nombre VARCHAR(5)
+/*DELIMITER $$
+DROP PROCEDURE if EXISTS p_mostrarclientes;p_mostrarclientes;
+create procedure p_mostrarclientes(rclientes(
+in p_nombre VARCHAR(50)
 )
 BEGIN
-	SELECT * from clientes where nombre like p_nombre;
-END;
-
+	SELECT c.idClientes, c.nombre, c.auto, t.clasificacion, c.turno from clientes c, tipoauto t ombre, c.auto, t.clasificacion, c.turno from clientes c, tipoauto t 
+	where nombre like p_nombre AND c.fkidTipoAuto = t.idTipoAuto;re AND c.fkidTipoAuto = t.idTipoAuto;
+END;*/
 
 #Procedimientos tipoAuto
-DROP TABLE if EXISTS tipoAuto;
-CREATE TABLE tipoAuto(
-idTipoAuto INT AUTO_INCREMENT PRIMARY KEY,
-auto varchar(50),
-clasificacion VARCHAR(50),
-unidad varchar(50), #medida en la que se evalua: piezas, puertas, etc..
-valor DOUBLE); #valor por unidad de medida 
-
 DELIMITER $$
 DROP PROCEDURE if EXISTS p_insertartipoauto;
 CREATE PROCEDURE p_insertartipoauto(
@@ -186,17 +167,17 @@ BEGIN
     SELECT COUNT(*) FROM tipoAuto WHERE clasificacion = p_clasificacion INTO x;
     IF x = 0 THEN
         IF p_idTipoAuto < 1 THEN
-            INSERT INTO tipoAuto VALUES (NULL, p_clasificacion, p_unidad, p_valor); 
+            INSERT INTO tipoAuto VALUES (NULL, p_clasificacion, p_unidad, p_valor);
         ELSE
             UPDATE tipoAuto SET  clasificacion = p_clasificacion, unidad = p_unidad, valor = p_valor 
 				WHERE idTipoAuto = p_idTipoAuto;
         END IF;
     ELSE
-        UPDATE tipoAuto SET clasificacion = p_clasificacion, unidad = p_unidad, valor = p_valor 
+        UPDATE tipoAuto SET clasificacion = p_clasificacion, unidad = p_unidad, valor = p_valor
 		  WHERE idTipoAuto = p_idTipoAuto;
     END IF;
 END;
-
+$$
 
 DELIMITER $$
 DROP PROCEDURE if EXISTS p_eliminartipoauto;
@@ -205,7 +186,7 @@ in p_idTipoAuto INT
 )
 BEGIN
 	delete from tipoAuto where idTipoAuto = p_idTipoAuto;
-END;
+END;$$
 
 DELIMITER $$
 DROP PROCEDURE if EXISTS p_mostrartipoauto;
@@ -214,39 +195,39 @@ in p_clasificacion VARCHAR(40)
 )
 BEGIN
 	SELECT * from tipoAuto where clasificacion LIKE p_clasificacion;
-END;
+END;$$
 
 
-#Procedimientos administrador
+#Procedimientos administradorador
 
 /*DELIMITER $$
-DROP PROCEDURE if EXISTS p_insertaradministrador;
-CREATE PROCEDURE p_insertaradministrador(
-    IN p_idAdministrador INT,
-    IN p_pagosEmpleados DOUBLE,
+DROP PROCEDURE if EXISTS p_insertaradministrador;p_insertaradministrador;
+CREATE PROCEDURE p_insertaradministrador(aradministrador(
+    IN p_idAdministrador INT,INT,
+    IN p_pagosEmpleados DOUBLE,OUBLE,
     IN p_fkidEmpleado INT
 )
 BEGIN
     DECLARE x INT;
-    SELECT COUNT(*) FROM administrador WHERE pagosEmpleados = p_pagosEmpleados INTO x;
+    SELECT COUNT(*) FROM administrador WHERE pagosEmpleados = p_pagosEmpleados INTO x;administrador WHERE pagosEmpleados = p_pagosEmpleados INTO x;
     IF x = 0 THEN
-        IF p_idAdministrador < 1 THEN
-            INSERT INTO administrador VALUES (null, p_pagosEmpleados, p_fkidEmpleado); 
+        IF p_idAdministrador < 1 THENdor < 1 THEN
+            INSERT INTO administrador VALUES (null, p_pagosEmpleados, p_fkidEmpleado); dministrador VALUES (null, p_pagosEmpleados, p_fkidEmpleado); 
         ELSE
-            UPDATE administrador SET pagosEmpleados = p_pagosEmpleados, fkidEmpleado = p_fkidEmpleado WHERE idAdministrador = p_idAdministrador;
+            UPDATE administrador SET pagosEmpleados = p_pagosEmpleados, fkidEmpleado = p_fkidEmpleado WHERE idAdministrador = p_idAdministrador;strador SET pagosEmpleados = p_pagosEmpleados, fkidEmpleado = p_fkidEmpleado WHERE idAdministrador = p_idAdministrador;
         END IF;
     ELSE
-        UPDATE administrador SET pagosEmpleados = p_pagosEmpleados, fkidEmpleado = p_fkidEmpleado WHERE idAdministrador = p_idAdministrador;
+        UPDATE administrador SET pagosEmpleados = p_pagosEmpleados, fkidEmpleado = p_fkidEmpleado WHERE idAdministrador = p_idAdministrador;dor SET pagosEmpleados = p_pagosEmpleados, fkidEmpleado = p_fkidEmpleado WHERE idAdministrador = p_idAdministrador;
     END IF;
 END;
 
 DELIMITER $$
-DROP PROCEDURE if EXISTS p_eliminaradministrador;
-create procedure p_eliminaradministrador(
+DROP PROCEDURE if EXISTS p_eliminaradministrador;p_eliminaradministrador;
+create procedure p_eliminaradministrador(aradministrador(
 in p_idAdministrador INT
 )
 BEGIN
-	delete from administrador where idAdministrador = p_idAdministrador;
+	delete from administrador where idAdministrador = p_idAdministrador;r where idAdministrador = p_idAdministrador;
 END;*/
 
 DELIMITER $$
@@ -256,43 +237,90 @@ in p_idAdministrador INT
 )
 BEGIN
 	SELECT * from administrador where idAdministrador = p_idAdministrador;
-END;
+END;$$
 
-delimiter //
+delimiter $$
 CREATE TRIGGER insertar_ventasTotales
 AFTER INSERT ON ventas
 FOR EACH ROW
 BEGIN
 	DECLARE existe INT;
-	SELECT COUNT(*) INTO existe FROM ventastotales WHERE fkidEmpleado = NEW.fkidEmpleado 
+	SELECT COUNT(*) INTO existe FROM ventastotales WHERE fkidEmpleado = NEW.fkidEmpleado
 		AND fecha = NEW.fecha;
 	if existe > 0 then
-		UPDATE ventastotales SET noClientes = noClientes + 1 WHERE fkidEmpleado = NEW.fkidEmpleado 
+		UPDATE ventastotales SET noClientes = noClientes + 1 WHERE fkidEmpleado = NEW.fkidEmpleado
 			AND fecha = NEW.fecha;
 	ELSE
 		INSERT INTO ventastotales values(NULL, NEW.fkidEmpleado, 1, NEW.fecha);
 	END if;
-END//
-delimiter ;
+END; $$
 
-/*Seleccionar el id del empleado, el nombre del empleado, la cantidad de pago y 
-la fecha, de las tablas de pagos y empleados donde la pagos.fkidEmpleado sea igual a empleados.idEmpleado*/
+#Actualizar ventas y clientesntes
+delimiter $$
+DROP TRIGGER if EXISTS modificar_pagos;
+CREATE TRIGGER modificar_pagos
+AFTER UPDATE ON ventas
+FOR EACH ROW
+BEGIN
+	DECLARE cantidadActual INT;
+   DECLARE valorNuevo float;
+   DECLARE valorViejo float;
+   select valor into valorNuevo from tipoAuto WHERE idTipoAuto = new.fkidTipoAuto;
+   select valor into valorViejo from tipoAuto where idTipoAuto = old.fkidTipoAuto;
+	SELECT cantidad INTO cantidadActual from pagos where fecha = new.fecha and fkidEmpleado = new.fkidEmpleado;
+	if NEW.cantidad != OLD.cantidad then
+		UPDATE pagos SET cantidad = (cantidadActual - (old.cantidad * valorViejo)) + (new.cantidad * valorNuevo)
+            WHERE fkidEmpleado = NEW.fkidEmpleado AND fecha = NEW.fecha;
+   END if;
+END; $$
+
+delimiter $$
+DROP TRIGGER if EXISTS quitar_pagos;
+CREATE TRIGGER quitar_pagos
+AFTER delete ON ventas
+FOR EACH ROW
+BEGIN
+	DECLARE cantidadActual INT;
+    DECLARE valorViejo float;
+    select valor into valorViejo from tipoAuto where idTipoAuto = old.fkidTipoAuto;
+	SELECT cantidad INTO cantidadActual from pagos where fecha = old.fecha;
+	UPDATE pagos SET cantidad = (cantidadActual - (old.cantidad * valorViejo)) 
+        WHERE fkidEmpleado = old.fkidEmpleado AND fecha = old.fecha;
+END; $$
+
+/*delimiter $$
+drop trigger if exists insertar_venta;
+create trigger insertar_venta
+after insert on clientes
+for each ROW
+BEGIN
+    insert into ventas(fkidTipoAuto, fkidCliente, fecha) values(new.fkidTipoAuto, new.idClientes, NOW());
+end; $$*/
+
+delimiter ;
 
 CREATE VIEW v_pagosDiarios AS
 SELECT p.id, e.idEmpleado, e.nombre, p.cantidad, p.fecha FROM pagos p, empleados e
 WHERE p.fkidEmpleado = e.idEmpleado;
 
-/*Seleccionar el id del empleado, el nombre del empleado, la cantidad de clientes atendidos y la fecha de 
-la tabla de ventasTotales y empleados donde las ids de los empleados coincidan*/
-
 CREATE VIEW v_clientesTotales AS
 SELECT v.id, e.idEmpleado, e.nombre, v.noClientes, v.fecha FROM ventasTotales v, empleados e
 WHERE v.fkidEmpleado = e.idEmpleado;
 
-/*Seleccionar  el id del empleado, el nombre del empleado, la clasificacion del auto, el fkidTipoAuto,
- las unidades, la cantidad de unidades y la fecha, de las tablas de ventas y empleados donde las ids de 
- los empleados coincidan*/
- 
 CREATE VIEW v_clientesFecha AS
 SELECT v.id, e.idEmpleado, e.nombre, a.clasificacion, v.cantidad, v.fecha FROM ventas v, empleados e, tipoauto a
 WHERE v.fkidEmpleado = e.idEmpleado AND v.fkidTipoAuto = a.idTipoAuto;
+
+CREATE VIEW v_turno AS
+SELECT turno
+FROM clientes
+ORDER BY idClientes DESC
+LIMIT 1;
+
+CREATE VIEW v_clientes as
+SELECT c.idClientes, c.nombre, c.auto, t.clasificacion, c.turno, v.fkidEmpleado, e.nombre 
+    from clientes c, tipoauto t, empleados e, ventas v
+	where c.fkidTipoAuto = t.idTipoAuto and v.fkidEmpleado = e.idEmpleado and v.fkidCliente = c.idClientes;
+	
+SELECT * FROM v_turno;
+SELECT * FROM v_clientes;

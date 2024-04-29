@@ -4,13 +4,13 @@
     {
         function Insertar(array $datos)
         {
-            $fecha = date('Y-m-d H:i:s', strtotime($datos['fecha']));
+            #$fecha = date('Y-m-d H:i:s', strtotime($datos['fecha']));
             $con = new mysqli(s, u, p, bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $q->prepare("INSERT INTO ventas VALUES (null, ?, ?, ?, ?)");
-            $q->bind_param('ssss', $datos['fkidEmpleado'], $datos['fkidTipoAuto'], $datos['pago'],
-            $fecha);
+            $q->prepare("INSERT INTO ventas VALUES (null, ?, ?, ?, ?, now())");
+            $q->bind_param('ssss', $datos['fkidEmpleado'], $datos['fkidTipoAuto'], $datos['fkidCliente'],
+             $datos['cantidad']);
             $q->execute();
             $q->close();
         }
@@ -48,13 +48,12 @@
         }
         function Modificar(array $datos)
         {
-            $fecha = date('Y-m-d H:i:s', strtotime($datos['fecha']));
             $con = new mysqli(s, u, p, bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $q->prepare("update ventas set fkidEmpleado=?, fkidTipoAuto=?, cantidad=?, fecha=? where id=?");
-            $q->bind_param('sssss', $datos['fkidEmpleado'], $datos['fkidTipoAuto'], $datos['cantidad'],
-            $fecha, $datos['id']);
+            $q->prepare("update ventas set fkidEmpleado=?, fkidTipoAuto=?, cantidad=? where fkidCliente=?");
+            $q->bind_param('ssss', $datos['fkidEmpleado'], $datos['fkidTipoAuto'], $datos['cantidad'],
+            $datos['idClientes']);
             $q->execute();
             $q->close();
         }

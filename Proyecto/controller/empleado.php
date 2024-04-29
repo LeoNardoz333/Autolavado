@@ -1,9 +1,10 @@
 <?php
 require 'config.php';
 require 'libreria/Factory.php';
-require 'libreria/Ventas.php';
-require 'libreria/Pagos.php';
+require 'libreria/GenerarPDF.php';
 require 'libreria/Empleados.php';
+require 'libreria/Pagos.php';
+require 'libreria/Ventas.php';
 session_start();
 $p = array();
 $f = new Factory();

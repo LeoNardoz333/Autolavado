@@ -4,7 +4,6 @@
     require 'libreria/IFunciones.php';
     require 'libreria/IPagos.php';
     require 'libreria/IVentas.php';
-    require 'libreria/GenerarPDF.php';
     class Factory
     {
         static function Mostrar($tipo, $filtro)
@@ -41,6 +40,12 @@
                         return $funcion->Consultar($filtro);
                         break;
                     }
+                case 'Usuarios': 
+                    {
+                        $funcion = new Usuarios(); 
+                        return $funcion->Consultar($filtro);
+                        break;
+                    }
                 case 'Ventas Totales': 
                     {
                         $funcion = new VentasTotales(); 
@@ -71,15 +76,21 @@
                         return $funcion->Insertar($datos);
                         break;
                     }
-                case 'Pagos': 
+                /*case 'Pagos': 
                     {
-                        $funcion = new Pagos(); 
-                        return $funcion->Insertar($datos);
+                        $funcion = new Empleados(); 
+                        return $funcion->calcularCobro($datos);
                         break;
-                    }
+                    }*/
                 case 'Ventas': 
                     {
-                        $funcion = new Ventas(); 
+                        $funcion = new Empleados(); 
+                        return $funcion->calcularCobro($datos);
+                        break;
+                    }
+                case 'Usuarios': 
+                    {
+                        $funcion = new Usuarios(); 
                         return $funcion->Insertar($datos);
                         break;
                     }
@@ -113,15 +124,21 @@
                         return $funcion->Modificar($datos);
                         break;
                     }
-                case 'Pagos': 
+                /*case 'Pagos': 
                     {
                         $funcion = new Pagos(); 
                         return $funcion->Modificar($datos);
                         break;
-                    }
+                    }*/
                 case 'Ventas': 
                     {
                         $funcion = new Ventas(); 
+                        return $funcion->Modificar($datos);
+                        break;
+                    }
+                case 'Usuarios': 
+                    {
+                        $funcion = new Usuarios(); 
                         return $funcion->Modificar($datos);
                         break;
                     }
@@ -167,6 +184,12 @@
                         return $funcion->ConsultaID($id);
                         break;
                     }
+                case 'Usuarios': 
+                    {
+                        $funcion = new Usuarios(); 
+                        return $funcion->ConsultaID($id);
+                        break;
+                    }
                 case 'Ventas Totales': 
                     {
                         $funcion = new VentasTotales(); 
@@ -206,6 +229,12 @@
                 case 'Ventas': 
                     {
                         $funcion = new Ventas(); 
+                        return $funcion->Borrar($id);
+                        break;
+                    }
+                case 'Usuarios': 
+                    {
+                        $funcion = new Usuarios(); 
                         return $funcion->Borrar($id);
                         break;
                     }
