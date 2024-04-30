@@ -54,7 +54,7 @@ class MYPDF extends TCPDF {
         }
         $this->Ln();
         // Color and font restoration
-        $this->SetFillColor(224, 235, 255);
+        $this->SetFillColor(217, 255, 231);
         $this->SetTextColor(0);
         $this->SetFont('');
         // Data
@@ -63,6 +63,62 @@ class MYPDF extends TCPDF {
             $this->Cell($w[0], 6, $row["fecha"], 'LR', 0, 'L', $fill);
             $this->Cell($w[1], 6, $row["nombre"], 'LR', 0, 'L', $fill);
             $this->Cell($w[2], 6, floatval($row["cantidad"]), 'LR', 0, 'R', $fill);
+            $this->Ln();
+            $fill=!$fill;
+        }
+        $this->Cell(array_sum($w), 0, '', 'T');
+    }
+    public function EmpleadoDia($header,$data) {
+        $this->SetFillColor(27, 88, 150);
+        $this->SetTextColor(255);
+        $this->SetDrawColor(42, 116, 191);
+        $this->SetLineWidth(0.3);
+        $this->SetFont('', 'B');
+        // Header
+        $w = array(95, 40, 45);
+        $num_headers = count($header);
+        for($i = 0; $i < $num_headers; ++$i) {
+            $this->Cell($w[$i], 7, $header[$i], 1, 0, 'C', 1);
+        }
+        $this->Ln();
+        // Color and font restoration
+        $this->SetFillColor(224, 235, 255);
+        $this->SetTextColor(0);
+        $this->SetFont('');
+        // Data
+        $fill = 0;
+        foreach($data as $row) {
+            $this->Cell($w[0], 6, $row["nombre"], 'LR', 0, 'L', $fill);
+            $this->Cell($w[1], 6, $row["fecha"], 'LR', 0, 'L', $fill);
+            $this->Cell($w[2], 6, intval($row["noClientes"]), 'LR', 0, 'R', $fill);
+            $this->Ln();
+            $fill=!$fill;
+        }
+        $this->Cell(array_sum($w), 0, '', 'T');
+    }
+    public function ClientesAtendidos($header,$data) {
+        $this->SetFillColor(140, 24, 105);
+        $this->SetTextColor(255);
+        $this->SetDrawColor(185, 35, 140);
+        $this->SetLineWidth(0.3);
+        $this->SetFont('', 'B');
+        // Header
+        $w = array(95, 40, 45);
+        $num_headers = count($header);
+        for($i = 0; $i < $num_headers; ++$i) {
+            $this->Cell($w[$i], 7, $header[$i], 1, 0, 'C', 1);
+        }
+        $this->Ln();
+        // Color and font restoration
+        $this->SetFillColor(255, 217, 250);
+        $this->SetTextColor(0);
+        $this->SetFont('');
+        // Data
+        $fill = 0;
+        foreach($data as $row) {
+            $this->Cell($w[0], 6, $row["nombre"], 'LR', 0, 'L', $fill);
+            $this->Cell($w[1], 6, $row["fecha"], 'LR', 0, 'L', $fill);
+            $this->Cell($w[2], 6, intval($row["noClientes"]), 'LR', 0, 'R', $fill);
             $this->Ln();
             $fill=!$fill;
         }
@@ -127,6 +183,16 @@ class GenerarPDF2
             $header = array('Fecha', 'Empleado', 'Cantidad pagada');
             $pdf->PagosDiarios($header, $data);
             $nombre = 'pagosDiarios';
+        }
+        else if($reporte == 'EmpleadoDelDia'){
+            $header = array('Empleado', 'Fecha', 'Número de clientes');
+            $pdf->EmpleadoDia($header, $data);
+            $nombre = 'EmpleadoDelDia';
+        }
+        else if($reporte == 'ClientesAtendidos'){
+            $header = array('Empleado', 'Fecha', 'Número de clientes');
+            $pdf->ClientesAtendidos($header, $data);
+            $nombre = 'ClientesAtendidos';
         }
         $pdf->Output($nombre . $empleado . $fecha . '.pdf', 'D');
     }
