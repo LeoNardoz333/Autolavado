@@ -46,8 +46,8 @@ if(isset($_POST['imprimir']))
     {
         $datos['fecha'] = '';
         $datos['nombre'] = '';
-        //$a->clientesTotales($datos);
-        $pdf->GenerarPDF();
+        $a->clientesTotales($datos);
+        #$pdf->GenerarPDF();
     }
     else if($_SESSION['reporte'] == 'empleados')
     {

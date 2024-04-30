@@ -6,31 +6,29 @@
         
         public function __construct()
         {
-            $this->reporte = new GenerarPDF();
+            $this->reporte = new GenerarPDF2();
         }
 
         function pagosDiarios(array $datos)
         {
-            //Se tienen que mandar en el array, el id del empleado, el nombre del empleado, la cantidad de pago y la fecha
-            //Filtrado por la fecha del día solicitado
             $resultados = array();
             $con = new mysqli(s, u, p, bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
             $datos['nombre'] = '%'.$datos['nombre'].'%';
-            if($datos['fecha'] != '')
-            {
-                $resultados = $this->Consultas($q, "select * from v_pagosDiarios where fecha = ? "."
+            if($datos['fecha'] != ''){
+                $resultados = $this->Consultas($q, "select v.fecha, v.nombre, v.cantidad from v_pagosDiarios v where fecha = ? "."
                 and nombre like ?", $datos['fecha'], $datos['nombre']);
+                $fecha = $datos['fecha'];
+                $nombre = $datos['nombre'];
             }
-            else
-            {
-                $resultados = $this->ConsultasSinParam($q, "select * from v_pagosDiarios "."
-                order by fecha desc");
-                #$resultados = $this->Consultas($q, "select * from v_pagosDiarios where nombre like ? "."
-                #order by fecha desc", $datos['nombre'],'no');
+            else{
+                $resultados = $this->Consultas($q, "select v.fecha, v.nombre, v.cantidad from v_pagosDiarios v where nombre like ? "."
+                order by fecha desc", $datos['nombre'],'no');
+                $fecha = '';
+                $nombre = $datos['nombre'];
             }
-            $this->reporte->GenerarReporte($resultados, 'Pagos a empleados '.$datos['fecha'], 'Pagos_'.$datos['fecha']);
+            $this->reporte->GenerarPDF($resultados, 'pagosDiarios', $fecha, $nombre,'Reporte de pagos diarios a empleados');
             $q->close();
         }
         function empleadoDelDia(array $datos, $todos)
