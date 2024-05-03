@@ -14,13 +14,24 @@ if(isset($_POST['login']) && isset($_POST['password']))
 {
     $validar = new Login();
     $p['usuario'] = $validar->validar($_POST['login'], $_POST['password']);
-    if($p['usuario'] == 'usuario' || $p['usuario'] == 'admin')
+    if($p['usuario'] == 'usuario')
+    // $p['usuario'] = $validar->validar($_POST['login'], $_POST['password']);
+    // if($p['usuario'] == 'usuario' || $p['usuario'] == 'admin')
     {
         $_SESSION['usuario'] = $_POST['login'];
         $_SESSION['permisos'] = $p['usuario'];
         $_SESSION['idUsuario'] = $validar->extraerID($_POST['login']);
+        // View('menuadm',$p);
         View('menu',$p);
         View('home',$p);
+    }
+    else if($p['usuario'] == 'admin')
+    {
+        $_SESSION['usuario'] = $_POST['login'];
+        $_SESSION['permisos'] = $p['usuario'];
+        $_SESSION['idUsuario'] = $validar->extraerID($_POST['login']);
+        View('menuadm',$p);
+        View('admhome',$p);
     }
     else
     {

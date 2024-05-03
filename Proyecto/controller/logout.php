@@ -1,8 +1,9 @@
 <?php
 session_start();
-$_SESSION['usuario']='';
-$_SESSION['idUsuario']='';
-$_SESSION['permisos']='';
+session_destroy();
+$_SESSION['usuario'] = '';
+$_SESSION['idUsuario'] = '';
+$_SESSION['permisos'] = '';
 $p = array();
-View('menu',$p);
-View('login',$p);
+View('menu', $p);
+View('login', $p);

@@ -171,17 +171,7 @@ body {
                     Registro Clientes
                 </a>
             </li>
-            <li>
-                <a href="empleado">
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#1b21be" fill="none">
-    <path d="M12.5 22H6.59087C5.04549 22 3.81631 21.248 2.71266 20.1966C0.453365 18.0441 4.1628 16.324 5.57757 15.4816C7.67837 14.2307 10.1368 13.7719 12.5 14.1052C13.3575 14.2261 14.1926 14.4514 15 14.7809" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-    <path d="M16.5 6.5C16.5 8.98528 14.4853 11 12 11C9.51472 11 7.5 8.98528 7.5 6.5C7.5 4.01472 9.51472 2 12 2C14.4853 2 16.5 4.01472 16.5 6.5Z" stroke="currentColor" stroke-width="1.5" />
-    <path d="M18.5 22L18.5 15M15 18.5H22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-</svg>
-                    Empleado
-                </a>
-            </li>
-			<li>
+			<!-- <li>
                 <a href="menuadm">
 				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#1b21be" fill="none">
     <path d="M20.9427 16.8354C20.2864 12.8866 18.2432 9.94613 16.467 8.219C15.9501 7.71642 15.6917 7.46513 15.1208 7.23257C14.5499 7 14.0592 7 13.0778 7H10.9222C9.94081 7 9.4501 7 8.87922 7.23257C8.30834 7.46513 8.04991 7.71642 7.53304 8.219C5.75682 9.94613 3.71361 12.8866 3.05727 16.8354C2.56893 19.7734 5.27927 22 8.30832 22H15.6917C18.7207 22 21.4311 19.7734 20.9427 16.8354Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -190,7 +180,7 @@ body {
 </svg>
                     ADMIN MENU
                 </a>
-            </li>
+            </li> -->
             <li>
                 <a href="reportes">
 
@@ -202,7 +192,7 @@ body {
 </svg>                
 				Reportes
 				</a>
-            </li>
+ 
             <li>
                 <a href="login">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#1b21be" fill="none">
@@ -212,7 +202,8 @@ body {
 </svg>
                     Login
                 </a>
-            </li>
+            </li>           
+            
             <li>
                 <a href="rusuarios">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#1b21be" fill="none">
@@ -221,6 +212,16 @@ body {
     <path d="M18 15.5L13 15.5M15.5 13V18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
 </svg>
                     Registrarse
+                </a>
+            </li>
+            <li>
+                <a href="logout">
+
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#1b21be" fill="none">
+    <path d="M7.02331 5.5C4.59826 7.11238 3 9.86954 3 13C3 17.9706 7.02944 22 12 22C16.9706 22 21 17.9706 21 13C21 9.86954 19.4017 7.11238 16.9767 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M12 2V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+</svg>
+                    Logout
                 </a>
             </li>            
         </ul>
