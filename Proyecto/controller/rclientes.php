@@ -1,7 +1,8 @@
 <?php
 require 'config.php';
 require 'libreria/Factory.php';
-require 'libreria/GenerarPDF.php';
+require 'libreria/GenerarPDF2.php';
+// require 'libreria/GenerarPDF.php';
 require 'libreria/Empleados.php';
 require 'libreria/Clientes.php';
 require 'libreria/Pagos.php';

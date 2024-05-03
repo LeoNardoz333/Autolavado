@@ -2,7 +2,7 @@
 require 'config.php';
 require 'libreria/Factory.php';
 require 'libreria/Usuarios.php';
-require 'libreria/GenerarPDF.php';
+require 'libreria/GenerarPDF2.php';
 require 'libreria/Empleados.php';
 require 'libreria/Pagos.php';
 require 'libreria/Ventas.php';

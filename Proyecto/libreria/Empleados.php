@@ -9,7 +9,7 @@
         
         public function __construct()
         {
-            $this->reporte = new GenerarPDF();
+            $this->reporte = new GenerarPDF2();
             $this->ventas = new Ventas();
             $this->pagos = new Pagos();
         }

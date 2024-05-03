@@ -2,7 +2,7 @@
 require 'config.php';
 require 'libreria/Factory.php';
 require 'libreria/Usuarios.php';
-require 'libreria/GenerarPDF.php';
+require 'libreria/GenerarPDF2.php';
 require 'libreria/Empleados.php';
 require 'libreria/Pagos.php';
 require 'libreria/Ventas.php';
@@ -45,7 +45,7 @@ if(isset($_POST['name'],$_POST['username'],$_POST['pass']))
     }
 }
 $p['resultado'] = $f->Mostrar('Usuarios','');
-View('menu',$p);
+View('menu',$p);//menuadm
 if($_SESSION['permisos'] == 'admin')
     View('gusuarios',$p);
 else if($_SESSION['permisos'] == 'usuario')
