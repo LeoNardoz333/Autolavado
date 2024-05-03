@@ -6,4 +6,29 @@
   }
 </style>
 <body class="fondo4">
-</body>
+  <div class="wrapper fadeInDown d-flex align-items-center justify-content-center">
+    <div id="formContent" class="flex-column">
+      <div>
+        <p>Autolavado</p>
+      </div>
+      <div class="first mt-3 mb-3">
+        <img src="images/alavado.png" id="icon" alt="Logo" />
+      </div>
+      <form class="mt-3 mb-3" method="post" action="login">
+        <input type="text" id="login" class="fadeIn second" name="login" placeholder="Usuario">
+        <input type="password" id="password" class="fadeIn third" name="password" placeholder="Contraseña">
+        <button type="submit" class="btn btn-primary mt-2 mb-2">Iniciar Sesion</button>
+        <a href="rusuarios" ><button type="button" class="btn btn-info mt-2 mb-2">Registrarse</button></a>
+      </form>
+      <div id="formFooter">
+        <div id="liveAlertPlaceholder"></div>
+        <button type="button" class="btn btn-primary" id="liveAlertBtn">Olvido su contraseña?</button>
+        <!-- <a class="underlineHover" href="#">Olvido su contrasena?</a> -->
+        </div>
+    </div>
+  </div>
+    <div>
+      <?php
+      #echo $usuario;
+      ?>
+    </div>

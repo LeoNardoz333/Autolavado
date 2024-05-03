@@ -193,7 +193,7 @@ body {
 				Reportes
 				</a>
  
-            <li>
+            <!-- <li>
                 <a href="login">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#1b21be" fill="none">
     <path d="M12.5 22H6.59087C5.04549 22 3.81631 21.248 2.71266 20.1966C0.453366 18.0441 4.1628 16.324 5.57757 15.4816C7.97679 14.053 10.8425 13.6575 13.5 14.2952" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -202,7 +202,7 @@ body {
 </svg>
                     Login
                 </a>
-            </li>     
+            </li>      -->
             <li>
                 <a href="logout">
 

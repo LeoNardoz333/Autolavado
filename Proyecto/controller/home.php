@@ -16,7 +16,7 @@ require 'libreria/Ventas.php';
 require 'libreria/Factory.php';*/
 
 $p = array();
-View('menu',$p);
+// View('menu',$p);
 View('home',$p);
 
 ?>
