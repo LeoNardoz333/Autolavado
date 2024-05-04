@@ -51,7 +51,7 @@ if(isset($_POST['name'],$_POST['username'],$_POST['pass']))
     }
 }
 $p['resultado'] = $f->Mostrar('Usuarios','');
-View('menu',$p);//menuadm
+// View('menu',$p);//menuadm
 if($_SESSION['permisos'] == 'admin')
     View('gusuarios',$p);
 else if($_SESSION['permisos'] == 'usuario')
