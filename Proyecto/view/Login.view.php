@@ -20,6 +20,10 @@
         <button type="submit" class="btn btn-primary mt-2 mb-2">Iniciar Sesion</button>
         <a href="rusuarios" ><button type="button" class="btn btn-info mt-2 mb-2">Registrarse</button></a>
       </form>
+      <?php
+      if(isset($usuario))
+      echo '<label style="color: red; display: block;">'.$usuario.'</label><br>';
+      ?>
       <div id="formFooter">
         <div id="liveAlertPlaceholder"></div>
         <button type="button" class="btn btn-primary" id="liveAlertBtn">Olvido su contraseña?</button>
@@ -28,7 +32,4 @@
     </div>
   </div>
     <div>
-      <?php
-      #echo $usuario;
-      ?>
     </div>
