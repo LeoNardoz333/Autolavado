@@ -35,12 +35,12 @@ if(isset($_POST['login']) && isset($_POST['password']))
     }
     else
     {
-        View('menu',$p);
+        #View('menu',$p);
         View('login',$p);
     }
 }
 else 
 {
-    View('menu',$p);
+    #View('menu',$p);
     View('login',$p);
 }

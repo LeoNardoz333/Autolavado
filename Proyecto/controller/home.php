@@ -14,9 +14,27 @@ require 'libreria/Login.php';
 require 'libreria/Pagos.php';
 require 'libreria/Ventas.php';
 require 'libreria/Factory.php';*/
-
+$usuario = false;
 $p = array();
 // View('menu',$p);
-View('home',$p);
+if(isset($_SESSION['permisos']))
+{
+    if($_SESSION['permisos']!='')
+    {
+        if($_SESSION['permisos'] == 'usuario')
+        {
+            $usuario=true;
+            View('menu',$p);
+            View('home',$p);
+        }
+        else if($_SESSION['permisos'] == 'admin')
+        {
+            View('menuadm',$p);
+            View('admhome',$p);
+        }
+    }
+}
+if($usuario==false)
+    View('login',$p);
 
 ?>
