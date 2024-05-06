@@ -101,3 +101,9 @@ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
       transform: none;
     }
   }
+/*letras de formularios*/
+  .label-grande {
+    font-size: larger;
+    font-weight: bold;
+}
+
