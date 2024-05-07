@@ -4,6 +4,7 @@
     /* background-image: linear-gradient(90deg, #6dd5ed 10%, #4567e4 90%); */
     background-image: linear-gradient(90deg, #93C3CE 0%, #D3E6EA 89%);
   }
+  
 </style>
 <body class="fondo4">
 <div>
@@ -13,7 +14,7 @@
 <div class="header-left">
 </div>
 <div class="row">
-    <div class="col-6" id="x">
+    <div class="col-6" id="x"style="width: 500px; padding-left: 100px;">
         <form method="post" action="rusuarios">
 						<br>
 						<div class="form-group">
@@ -26,7 +27,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-						<label for="username" class="cols-sm-2 control-label" style="font-size: larger; font-weight: bold;">Usuario</label>
+						<label for="username" class="cols-sm-2 control-label"style="font-size: larger; font-weight: bold;">Usuario</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
@@ -35,7 +36,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-						<label for="pass" class="cols-sm-2 control-label" style="font-size: larger; font-weight: bold;">Contraseña</label>
+						<label for="pass" class="cols-sm-2 control-label"style="font-size: larger; font-weight: bold;">Contraseña</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
@@ -54,7 +55,7 @@
 							</div>
 						</div> */
 						?>
-						<div class="form-group ">
+						<div class="form-group "style="padding-left: 80px;">
 							<button type="submit" class="btn btn-primary btn-lg mt-3">Registrar</button>
 							<a href="login" class="btn btn-danger btn-lg mt-3">Cancelar</a>
 						</div>

@@ -1,11 +1,16 @@
 <style>
   .fondoAdm
   {
-    background-image: linear-gradient(90deg, #ffffff 31%, #7cb8ea 100%);
+    background-image: linear-gradient(90deg, #93C3CE 0%, #D3E6EA 89%)
   }
+  .btn-cus {
+    width: 20%;
+    margin-bottom: 15px;
+		margin-left: 220px;
+    }
 </style>
 <body class="fondoAdm">
-<div class="row">
+<div class="row"style="width: 1100px;">
     <div class="col-6" id="x">
         <form method="post" action="rusuarios">
             Empleado <input type="text" name="name" placeholder="Nombre Empleado" class="form-control"> 
@@ -19,7 +24,7 @@
     <option value="usuario">Usuario</option>
   </select>
 </div>
-            <button type="submit" class="btn btnAdm mt-3">
+            <button type="submit" class="btn btnAdm btn-cus mt-3">
                 Guardar
             </button>
         </form>

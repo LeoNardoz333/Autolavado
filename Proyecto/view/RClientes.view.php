@@ -4,21 +4,25 @@
     /* background-image: linear-gradient(90deg, #6dd5ed 10%, #4567e4 90%); */
     background-image: linear-gradient(90deg, #93C3CE 0%, #D3E6EA 89%);
   }
+  .btn-cus {
+        width: 20%;
+        margin-bottom: 15px;
+		    margin-left: 180px;
+    }
 </style>
 <body class="fondo4">
 <img style="max-width: 70px; height: auto; display: inline-block; vertical-align: middle;" src="images/alavado.png">
     <h2 style="color: navy; padding-left: 20px; display: inline-block; margin-left: 10px;">Registro Clientes</h2>
 </div>
-<div class="row">
+<div class="row"style="width: 1000px;">
     <div class="col-6" id="x">
         <form method="post" action="rclientes"style="font-size: larger; font-weight: bold;">
             Nombre <input type="text" name="txtNombre" placeholder="Nombre Cliente" class="form-control"> 
-            Auto <input type="text" name="txtAuto" placeholder="Auto" class="form-control">
-
+            Auto <input type="text" name="txtAuto" placeholder="Auto" class="form-control"><br>
             <div class="input-group mb-3">
-  <label class="mt-3"style="font-size: larger; font-weight: bold;" for="inputGroupSelect01">Tipo de vehiculo</label>
-  <select class="form-select" id="inputGroupSelect01" name="tipoVehiculo">
-    <option selected>Selecciona...</option>
+          <label class="mt-3"style="font-weight: bold;" for="inputGroupSelect01">Tipo de vehiculo</label>
+          <select class="form-select" id="inputGroupSelect01" name="tipoVehiculo">
+            <option selected>Selecciona...</option>
     <?php
     require('config.php');
     $con = new mysqli(s, u, p, bd);
@@ -65,7 +69,7 @@
             'value="'.($turno + 1).'" readonly>';
             $w->close();
             ?>
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary btn-cus">
                 Guardar
             </button>
         </form>
