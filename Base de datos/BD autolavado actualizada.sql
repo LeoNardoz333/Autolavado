@@ -297,6 +297,17 @@ BEGIN
     delete from ventas where fkidCliente = old.idClientes;
 end; $$
 
+delimiter $$
+drop trigger if exists quitar_empleado;
+create trigger quitar_empleado
+before delete on empleados
+for each ROW
+BEGIN
+    delete from ventastotales where fkidEmpleado = old.idEmpleado;
+    delete from pagos where fkidEmpleado = old.idEmpleado;
+    delete from ventas where fkidEmpleado = old.idEmpleado;
+end; $$
+
 /*delimiter $$
 drop trigger if exists insertar_venta;
 create trigger insertar_venta
