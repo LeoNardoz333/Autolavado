@@ -56,14 +56,23 @@
             $con = new mysqli(s, u, p, bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $q->prepare("update ventasTotales set fkidEmpleado=?, noClientes=?, fecha=? where id=?");
-            $q->bind_param('ssss', $datos['fkidEmpleado'], $datos['noClientes'], $datos['fecha'], $datos['id']);
+            $q->prepare("update ventasTotales set noClientes=?, fecha=? where fkidEmpleado=?");
+            $q->bind_param('sss', $datos['noClientes'], $datos['fecha'], $datos['fkidEmpleado']);
             $q->execute();
             $q->close();
         }
         function ConsultaID($id)
         {
-            
+            $con = new mysqli(s,u,p,bd);
+            $con->set_charset("utf8");
+            $q = $con->stmt_init();
+            $q->prepare("select * from ventasTotales where fkidEmpleado = ?");
+            $q->bind_param('s', $id);
+            $q->execute();
+            $q->bind_result($idVenta, $idEmpleado, $noClientes, $fecha);
+            $q->fetch();
+            $q->close();
+            return array($idVenta, $idEmpleado, $noClientes, $fecha);
         }
         function Borrar($id)
         {

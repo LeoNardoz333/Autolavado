@@ -288,6 +288,15 @@ BEGIN
         WHERE fkidEmpleado = old.fkidEmpleado AND fecha = old.fecha;
 END; $$
 
+delimiter $$
+drop trigger if exists quitar_ventas;
+create trigger quitar_ventas
+before delete on clientes
+for each ROW
+BEGIN
+    delete from ventas where fkidCliente = old.idClientes;
+end; $$
+
 /*delimiter $$
 drop trigger if exists insertar_venta;
 create trigger insertar_venta

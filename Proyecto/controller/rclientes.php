@@ -7,12 +7,23 @@ require 'libreria/Empleados.php';
 require 'libreria/Clientes.php';
 require 'libreria/Pagos.php';
 require 'libreria/Ventas.php';
+require 'libreria/VentasTotales.php';
 session_start();
 $f = new Factory();
 $p = array();
 $datos = array();
 if(isset($_POST['_id']))
 {
+    $ventas = array();
+    $ventasTotales = array();
+    $ventas = $f->ConsultaID('Ventas',$_POST['_id']);
+    $idEmpleado = $ventas[1];
+    $ventasTotales = $f->ConsultaID('Ventas Totales', $idEmpleado);
+    $datos['noClientes'] = intval($ventasTotales[2]) - 1;
+    $datos['fecha'] = $ventasTotales[3];
+    $datos['fkidEmpleado'] = $idEmpleado;
+    $f->Modificar('Ventas Totales', $datos);
+    #$f->Borrar('Ventas', $_POST['_id']);
     $f->Borrar('Clientes', $_POST['_id']);
 }
 else if(isset($_POST['ide'], $_POST['txtNombre'], $_POST['txtAuto'], $_POST['tipoVehiculo'],
@@ -32,6 +43,7 @@ else if(isset($_POST['ide'], $_POST['txtNombre'], $_POST['txtAuto'], $_POST['tip
 else if(isset($_POST['txtNombre'], $_POST['txtAuto'], $_POST['tipoVehiculo'],
     $_POST['txtCaracteristica'], $_POST['txtTurno']))
 {
+    date_default_timezone_set('America/Mexico_City');
     $datos['cantidad'] = $_POST['txtCaracteristica'];
     $datos['fecha'] = date('Y-m-d');
     $datos['nombre'] = $_POST['txtNombre'];
