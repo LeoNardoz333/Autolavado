@@ -1,15 +1,13 @@
 <?php
     class Empleados
-    implements ICrud, IVentas, IFunciones
+    implements ICrud
     {
-        private $reporte;
         private $ventas;
         private $pagos;
         private $resultados = array();
         
         public function __construct()
         {
-            $this->reporte = new GenerarPDF2();
             $this->ventas = new Ventas();
             $this->pagos = new Pagos();
         }
@@ -106,18 +104,6 @@
             $q->prepare("delete from empleados where idEmpleado=?");
             $q->bind_param('s', $id);
             $q->execute();
-            $q->close();
-        }
-        function clientesTotales(array $datos)
-        {
-            //Se tienen que mandar en el array, el id del empleado, el nombre del empleado, la cantidad de clientes y la fecha
-            //Filtrado por la fecha del día solicitado
-            $con = new mysqli(s, u, p, bd);
-            $con->set_charset("utf8");
-            $q = $con->stmt_init();
-            $this->resultados = $this->ConsultasFilas($q, "select * from v_clientesTotales where fecha = ?",
-                $datos['fecha']);
-            $this->reporte->GenerarReporte($this->resultados, 'Clientes totales '.$datos['fecha'], 'Clientes_'.$datos['fecha']);
             $q->close();
         }
         function calcularCobro(array $datos)

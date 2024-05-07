@@ -59,14 +59,23 @@
         }
         function ConsultaID($id)
         {
-            
+            $con = new mysqli(s,u,p,bd);
+            $con->set_charset("utf8");
+            $q = $con->stmt_init();
+            $q->prepare("select * from ventas where fkidCliente = ?");
+            $q->bind_param('s', $id);
+            $q->execute();
+            $q->bind_result($idVenta, $idEmpleado, $idTipoAuto, $idCliente, $cantidad, $fecha);
+            $q->fetch();
+            $q->close();
+            return array($idVenta, $idEmpleado, $idTipoAuto, $idCliente, $cantidad, $fecha);
         }
         function Borrar($id)
         {
             $con = new mysqli(s, u, p, bd);
             $con->set_charset("utf8");
             $q = $con->stmt_init();
-            $q->prepare("delete from ventas where id=?");
+            $q->prepare("DELETE FROM ventas WHERE fkidCliente = ?");
             $q->bind_param('s', $id);
             $q->execute();
             $q->close();
