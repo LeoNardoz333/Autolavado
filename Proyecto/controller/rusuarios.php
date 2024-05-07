@@ -17,6 +17,7 @@ $f = new Factory();
 $usuarios = new Usuarios();
 $p = array();
 $datos = array();
+$registro = false;
 if(isset($_POST['_id']))
 {
     $f->Borrar('Usuarios',$_POST['_id']);
@@ -35,6 +36,7 @@ else if(isset($_POST['ide'],$_POST['name'],$_POST['username'],$_POST['pass'],$_P
 }
 if(isset($_POST['name'],$_POST['username'],$_POST['pass']))
 {
+    $registro = true;
     $existe = $usuarios->getUsuario($_POST['name']);
     $datos['usuario'] = $_POST['username'];
     $datos['contrasena'] = $_POST['pass'];
@@ -59,8 +61,10 @@ if($_SESSION['permisos'] == 'admin')
 }    
 else if($_SESSION['permisos'] == 'usuario')
 {
-    View('menu',$p);
+    #View('menu',$p);
     View('login',$p);
 }
+else if($registro == true)
+    View('login');
 else
     View('rusuarios',$p);
