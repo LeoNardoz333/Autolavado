@@ -2,22 +2,21 @@
   .fondo4
   {
     /* background-image: linear-gradient(90deg, #6dd5ed 10%, #4567e4 90%); */
-    background-image: linear-gradient(90deg, #000042 0%, #4567e4 89%);
+    background-image: linear-gradient(90deg, #93C3CE 0%, #D3E6EA 89%);
   }
 </style>
 <body class="fondo4">
-<div>Registro Clientes</div>
-<div class="header-left">
-							<img src="images/alavado.png">
+<img style="max-width: 70px; height: auto; display: inline-block; vertical-align: middle;" src="images/alavado.png">
+    <h2 style="color: navy; padding-left: 20px; display: inline-block; margin-left: 10px;">Registro Usuarios</h2>
 </div>
 <div class="row">
     <div class="col-6" id="x">
-        <form method="post" action="rclientes">
+        <form method="post" action="rclientes"style="font-size: larger; font-weight: bold;">
             Nombre <input type="text" name="txtNombre" placeholder="Nombre Cliente" class="form-control"> 
             Auto <input type="text" name="txtAuto" placeholder="Auto" class="form-control">
 
             <div class="input-group mb-3">
-  <label class="mt-3" for="inputGroupSelect01">Tipo de vehiculo</label>
+  <label class="mt-3"style="font-size: larger; font-weight: bold;" for="inputGroupSelect01">Tipo de vehiculo</label>
   <select class="form-select" id="inputGroupSelect01" name="tipoVehiculo">
     <option selected>Selecciona...</option>
     <?php
@@ -50,7 +49,7 @@
     <option value="3">Tractocamion</option>
   </select>
 </div> -->
-            Cantidad <input type="text" name="txtCaracteristica" placeholder="Caracteristica" class="form-control">
+            Cantidad <input type="number" name="txtCaracteristica" placeholder="Cantidad" class="form-control">
             <?php 
             $turno = 0;
             $fecha = date('Y-m-d');
