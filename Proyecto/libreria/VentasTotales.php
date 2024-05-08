@@ -35,7 +35,7 @@
             $q->bind_result($id, $idempleado, $empleado, $fecha, $clientes);
 
             $rs = '<table class="table table-bordered table-striped"><thead><tr><th>ID</th>'.
-            '<th>ID del empleado</th><th>Empleado</th><th>No. de clientes</th><th>Fecha</th>'.
+            '<th>ID del empleado</th><th>Empleado</th><th>Fecha</th><th>No. de clientes</th>'.
             '</tr></thead><tbody>';
 
             while ($q->fetch()) {
