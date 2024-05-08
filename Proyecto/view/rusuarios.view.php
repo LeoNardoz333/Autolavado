@@ -58,6 +58,12 @@
 						<div class="form-group ">
 							<button type="submit" class="btn btn-primary btn-lg mt-3">Registrar</button>
 						</div>
+<<<<<<< Updated upstream
+=======
+						<div class="form-group">
+							<a href="login" class="btn btn-danger btn-lg mt-3">Regresar</a>         
+						</div>
+>>>>>>> Stashed changes
         </form>
     </div>
     <div class="col-6">
