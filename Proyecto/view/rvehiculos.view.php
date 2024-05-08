@@ -11,7 +11,7 @@
     }
 </style>
 <body class="fondo4">
-<div class="row">
+<div class="row"style="width: 1200px;">
     <div class="col-6" id="x">
         <form method="post" action="rvehiculos"style="font-size: larger; font-weight: bold;">
             Clasificacion <input type="text" name="txtClasificacion" placeholder="Tipo de vehiculo" class="form-control"> 

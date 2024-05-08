@@ -28,6 +28,7 @@
     }
 </style>
 <nav class="navigation">
+<img style="max-width: 60px; height: 60px; vertical-align: middle; margin-right:500px;"src="images/alavado.png">
         <ul class="nav-list">
             <li class="active">
                 <a href="home">

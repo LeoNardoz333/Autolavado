@@ -11,9 +11,7 @@
     }
 </style>
 <body class="fondo4">
-<img style="max-width: 70px; height: auto; display: inline-block; vertical-align: middle;" src="images/alavado.png">
-    <h2 style="color: navy; padding-left: 20px; display: inline-block; margin-left: 10px;">Registro Clientes</h2>
-</div>
+    <h2 style="color: navy; display: inline-block; margin-left: 20px;">Registro Clientes</h2>
 <div class="row"style="width: 1000px;">
     <div class="col-6" id="x">
         <form method="post" action="rclientes"style="font-size: larger; font-weight: bold;">

@@ -10,7 +10,7 @@
     }
 </style>
 <body class="fondoAdm">
-<div class="row"style="width: 1100px;">
+<div class="row"style="width: 1100px; pading">
     <div class="col-6" id="x">
         <form method="post" action="rusuarios">
             Empleado <input type="text" name="name" placeholder="Nombre Empleado" class="form-control"> 

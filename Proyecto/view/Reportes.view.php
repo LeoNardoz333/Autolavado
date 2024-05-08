@@ -18,7 +18,6 @@
 </style>
 <body class="fondo4"style="margin: 0; padding: 0;">
     <div>
-        <img style="max-width: 70px; height: auto; display: inline-block; vertical-align: middle;" src="images/alavado.png">
         <h2 style="color: navy; padding-left: 20px; display: inline-block; margin-left: 10px;">Registro Clientes</h2>
     </div>
     <div class="header">
