@@ -3,12 +3,22 @@ require 'config.php';
 require 'libreria/Factory.php';
 require 'libreria/Clasificacion.php';
 session_start();
+if(isset($_SESSION['alertaAuto']))
+    $_SESSION['alertaAuto'] = 'umu';
 $p = array();
 $datos = array();
 $f = new Factory();
+$a = new Clasificacion();
 if(isset($_POST['_id']))
 {
-    $f->Borrar('Clasificacion', $_POST['_id']);
+    $_SESSION['alertaAuto'] = 'umu';
+    $existe = $a->Validar($_POST['_id']);
+    if($existe < 1)
+    {
+        $f->Borrar('Clasificacion', $_POST['_id']);
+    }
+    else
+        $_SESSION['alertaAuto'] = 'No puedes borrar este vehículo, ya que existen registros que dependen de éste.';
 }
 else if(isset($_POST['ide'], $_POST['txtClasificacion'], $_POST['txtUnidad'], $_POST['txtValor']))
 {

@@ -93,5 +93,19 @@
             $q->execute();
             $q->close();
         }
+        function Validar($id)
+        {
+            $con = new mysqli(s, u, p, bd);
+            $con->set_charset("utf8");
+            $q = $con->stmt_init();
+            $q->prepare("select count(*) from tipoauto a, clientes c where a.idTipoAuto = ? and".
+            " a.idTipoAuto = c.fkidTipoAuto");
+            $q->bind_param('s', $id);
+            $q->execute();
+            $q->bind_result($conteo);
+            $q->fetch();
+            $q->close();
+            return $conteo;
+        }
     }
 ?>

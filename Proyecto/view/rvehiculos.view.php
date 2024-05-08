@@ -20,4 +20,14 @@
         <?php echo $resultado; ?>
     </div>
 </div>
+<?php
+// Verifica si existe la variable de sesión 'alertaAuto'
+    if(isset($_SESSION['alertaAuto'])) {
+        if($_SESSION['alertaAuto'] != 'umu')
+        {
+            echo '<script>alert("' . $_SESSION['alertaAuto'] . '");</script>';
+            unset($_SESSION['alertaAuto']);
+        }
+}
+?>
 </body>
