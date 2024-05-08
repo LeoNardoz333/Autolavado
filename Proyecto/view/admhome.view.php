@@ -1,7 +1,7 @@
 <style>
   .fondoAdm
   {
-    background-image: linear-gradient(90deg, #ffffff 31%, #7cb8ea 100%);
+    background-image: linear-gradient(90deg, #93C3CE 0%, #D3E6EA 89%)
   }
 </style>
 <body class="fondoAdm">
