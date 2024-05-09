@@ -63,12 +63,12 @@
                 if($_SESSION['permisos'] != 'admin' && $_SESSION['idUsuario'] == $idEmpleado)
                 {
                     $rs .= '<td><form method="post" action="rclientes">
-                            <button> Eliminar </button>
+                            <button class="btn btn-danger"> Eliminar </button>
                             <input type="hidden" name="_id" value="'.$id.'">
                         </form>
                     </td>
                     <td>
-                        <button class="editar" _ide="'.$id.'"> Editar </button>
+                        <button class="btn btn-warning editar" _ide="'.$id.'"> Editar </button>
                     </td>';
                 }
                 else if($_SESSION['permisos'] != 'admin')

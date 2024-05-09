@@ -44,12 +44,12 @@
                 <td>$contrasena</td>
                 <td>$permisos</td>".'
                 <td><form method="post" action="rusuarios">
-                        <button> Eliminar </button>
+                        <button class="btn btn-danger"> Eliminar </button>
                         <input type="hidden" name="_id" value="'.$idEmpleado.'">
                     </form>
                 </td>
                 <td>
-                    <button class="editar" _ide="'.$idEmpleado.'"> Editar </button>
+                    <button class="btn btn-warning editar" _ide="'.$idEmpleado.'"> Editar </button>
                 </td>
                 </tr>';
             }
