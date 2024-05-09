@@ -14,13 +14,13 @@
       <div class="first mt-3 mb-3">
         <img src="images/alavado.png" id="icon" alt="Logo" style="max-width: 100px; height: auto;"/> <br>
       </div>
-      <form class="mt-3 mb-3" method="post" action="login">
-        <input type="text" id="login" class="fadeIn second" name="login" placeholder="Usuario">
-        <br><br>
-        <input type="password" id="password" class="fadeIn third" name="password" placeholder="Contraseña"><br><br>
-        <button type="submit" class="btn btn-primary mt-2 mb-2">Iniciar Sesion</button>
-        <a href="rusuarios" ><button type="button" class="btn btn-info mt-2 mb-2">Registrarse</button></a>
-      </form>
+      <form class="mt-3 mb-3" method="post" action="login" onsubmit="return validarFormulario()">
+  <input type="text" id="login" class="fadeIn second" name="login" placeholder="Usuario">
+  <br><br>
+  <input type="password" id="password" class="fadeIn third" name="password" placeholder="Contraseña"><br><br>
+  <button type="submit" class="btn btn-primary mt-2 mb-2">Iniciar Sesión</button>
+  <a href="rusuarios"><button type="button" class="btn btn-info mt-2 mb-2">Registrarse</button></a>
+</form>
       <?php
       if(isset($usuario))
       echo '<label style="color: red; display: block;">'.$usuario.'</label><br>';
@@ -34,3 +34,17 @@
   </div>
     <div>
     </div>
+
+    <script>
+function validarFormulario() {
+  var usuario = document.getElementById('login').value.trim();
+  var contrasena = document.getElementById('password').value.trim();
+
+  if (usuario === '' || contrasena === '') {
+    alert('Por favor, complete todos los campos.');
+    return false;
+  }
+
+  return true;
+}
+</script>
