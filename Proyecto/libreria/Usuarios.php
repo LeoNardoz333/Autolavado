@@ -43,8 +43,9 @@
                 <td>$usuario</td>
                 <td>$contrasena</td>
                 <td>$permisos</td>".'
-                <td><form method="post" action="rusuarios">
-                        <button class="btn btn-danger"> Eliminar </button>
+                <td>
+                    <form method="post" action="rusuarios" id="formEliminar_'.$id.'" onsubmit="return confirmarEliminar('.$id.')">
+                        <button class="btn btn-danger" >Eliminar</button>
                         <input type="hidden" name="_id" value="'.$idEmpleado.'">
                     </form>
                 </td>
@@ -52,8 +53,7 @@
                     <button class="btn btn-warning editar" _ide="'.$idEmpleado.'"> Editar </button>
                 </td>
                 </tr>';
-            }
-
+            }#onclick="confirmarEliminar('.$id.')"
             $q->close();
             return $rs.'</tbody></table>
             <script>
@@ -63,6 +63,13 @@
                         $("#x").html(mensaje);
                     });
                 });
+                function confirmarEliminar(id) {
+                    if (confirm("¿Estás seguro que deseas eliminar este elemento?")) {
+                        document.getElementById("formEliminar_" + id).submit();
+                    } else {
+                        return false;
+                    }
+                }
             </script>';
         }
         function Modificar(array $datos)

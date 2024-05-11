@@ -62,7 +62,7 @@
                 <td>$fecha</td>";
                 if($_SESSION['permisos'] != 'admin' && $_SESSION['idUsuario'] == $idEmpleado)
                 {
-                    $rs .= '<td><form method="post" action="rclientes">
+                    $rs .= '<td><form method="post" action="rclientes" id="formEliminar_'.$id.'" onsubmit="return confirmarEliminar('.$id.')">
                             <button class="btn btn-danger"> Eliminar </button>
                             <input type="hidden" name="_id" value="'.$id.'">
                         </form>
@@ -87,6 +87,13 @@
                         $("#x").html(mensaje);
                     });
                 });
+                function confirmarEliminar(id) {
+                    if (confirm("¿Estás seguro que deseas eliminar este elemento?")) {
+                        document.getElementById("formEliminar_" + id).submit();
+                    } else {
+                        return false;
+                    }
+                }
             </script>';
         }
         function Modificar(array $datos)

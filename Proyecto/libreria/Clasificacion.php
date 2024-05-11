@@ -38,7 +38,7 @@
                 <td>$unidad</td>
                 <td>$valor</td>
                 <td>".'
-                    <form method="post" action="rvehiculos">
+                    <form method="post" action="rvehiculos" id="formEliminar_'.$id.'" onsubmit="return confirmarEliminar('.$id.')">
                         <button class="btn btn-danger">Eliminar</button>
                         <input type="hidden" value="'.$id.'" name="_id">
                     </form>
@@ -58,6 +58,13 @@
                         $("#x").html(mensaje);
                     });
                 });
+                function confirmarEliminar(id) {
+                    if (confirm("¿Estás seguro que deseas eliminar este elemento?")) {
+                        document.getElementById("formEliminar_" + id).submit();
+                    } else {
+                        return false;
+                    }
+                }
             </script>';
         }
         function Modificar(array $datos)
