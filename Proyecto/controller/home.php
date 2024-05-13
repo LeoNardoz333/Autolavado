@@ -29,6 +29,7 @@ if(isset($_SESSION['permisos']))
         }
         else if($_SESSION['permisos'] == 'admin')
         {
+            $usuario=true;
             View('menuadm',$p);
             View('admhome',$p);
         }
@@ -36,5 +37,4 @@ if(isset($_SESSION['permisos']))
 }
 if($usuario==false)
     View('login',$p);
-
 ?>
